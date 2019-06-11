@@ -89,7 +89,7 @@
     <Compile Include="Time_Period.cs" />
     <Compile Include="Undangan.cs" />
     <Compile Include="Undangan_Detail.cs" />
-    <Compile Include="User_Role.cs" />
+    <Compile Include="UserRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
