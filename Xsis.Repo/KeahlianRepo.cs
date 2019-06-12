@@ -15,6 +15,11 @@ namespace Xsis.Repo
             using (DataContext db = new DataContext())
             {
                 result = db.Keahlian.ToList();
+                //var query = from t in db.Keahlian
+                //            where t.is_delete == false
+                //            select new { t.col1, t.col2, t.col3 };
+                //var myObject = query.SingleOrDefault();
+
             }
             return result;
         }
@@ -25,7 +30,8 @@ namespace Xsis.Repo
             {
                 Keahlian keahlian = new Keahlian();
                 using (DataContext db = new DataContext())
-                {  
+                {
+                    keahlian.created_by=keahlianmdl.created_by;
                     keahlian.created_on = DateTime.Now.Date;
                     keahlian.skill_name = keahlianmdl.skill_name;
                     keahlian.skill_level_id = keahlianmdl.skill_level_id;

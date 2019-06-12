@@ -26,7 +26,7 @@ namespace Xsis.Web.Controllers
 
         public ActionResult Save(Keahlian keahlian)
         {
-            
+            keahlian.created_by = Convert.ToInt64(Session["foo"]);
             if (KeahlianRepo.Createkeahlian(keahlian))
             {
                 return Json(new { Simpan = "Berhasil" }, JsonRequestBehavior.AllowGet);

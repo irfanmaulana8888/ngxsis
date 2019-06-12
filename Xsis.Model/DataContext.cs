@@ -12,8 +12,8 @@ namespace Xsis.Model
     {
         public DataContext() : base("Name=NgxsisConn")
         {
-            Database.SetInitializer(new Initializer());
-            //Database.SetInitializer<DataContext>(null);
+            //Database.SetInitializer(new Initializer());
+            Database.SetInitializer<DataContext>(null);
         }
 
         public virtual DbSet<AddrBook> AddrBook { get; set; }
