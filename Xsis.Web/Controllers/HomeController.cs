@@ -14,9 +14,5 @@ namespace Xsis.Web.Controllers
         {
             return View();
         }
-        public ActionResult Tampil()
-        {
-            return Json(BiodataRepo.GetAll(), JsonRequestBehavior.AllowGet);
-        }
     }
 }

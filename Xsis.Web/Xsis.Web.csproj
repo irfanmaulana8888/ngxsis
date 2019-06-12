@@ -100,10 +100,29 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="datepicker\AUTHORS.txt" />
+    <Content Include="datepicker\external\jquery\jquery.js" />
+    <Content Include="datepicker\images\ui-icons_444444_256x240.png" />
+    <Content Include="datepicker\images\ui-icons_555555_256x240.png" />
+    <Content Include="datepicker\images\ui-icons_777620_256x240.png" />
+    <Content Include="datepicker\images\ui-icons_777777_256x240.png" />
+    <Content Include="datepicker\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="datepicker\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="datepicker\index.html" />
+    <Content Include="datepicker\jquery-ui.css" />
+    <Content Include="datepicker\jquery-ui.js" />
+    <Content Include="datepicker\jquery-ui.min.css" />
+    <Content Include="datepicker\jquery-ui.min.js" />
+    <Content Include="datepicker\jquery-ui.structure.css" />
+    <Content Include="datepicker\jquery-ui.structure.min.css" />
+    <Content Include="datepicker\jquery-ui.theme.css" />
+    <Content Include="datepicker\jquery-ui.theme.min.css" />
+    <Content Include="datepicker\LICENSE.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="datepicker\package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -116,6 +135,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KeahlianController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,6 +151,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Keahlian\Index.cshtml" />
+    <Content Include="Views\Keahlian\_Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

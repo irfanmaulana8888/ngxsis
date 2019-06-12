@@ -25,24 +25,15 @@ namespace Xsis.Model
         [Required(AllowEmptyStrings = false)]
         public DateTime created_on { get; set; }
 
-
-        [Required(AllowEmptyStrings = true)]
-        public long modified_by { get; set; }
-
+        public Nullable<long> modified_by { get; set; }
 
         [Column(TypeName = "Date")]
-        [Required(AllowEmptyStrings = true)]
-        public DateTime modified_on { get; set; }
+        public Nullable<DateTime> modified_on { get; set; }
 
-
-        [Required(AllowEmptyStrings = true)]
-        public long deleted_by { get; set; }
-
+        public Nullable<long> deleted_by { get; set; }
 
         [Column(TypeName = "Date")]
-        [Required(AllowEmptyStrings = true)]
-        public DateTime deleted_on { get; set; }
-
+        public Nullable<DateTime> deleted_on { get; set; }
 
         public Boolean is_delete { get; set; }
 
@@ -50,16 +41,13 @@ namespace Xsis.Model
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(100)]
-        [Required(AllowEmptyStrings = true)]
         public string skill_name { get; set; }
 
         [Range(1, 11)]
-        [Required(AllowEmptyStrings = true)]
-        public long skill_level_id { get; set; }
+        public Nullable<long>skill_level_id { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(1000)]
-        [Required(AllowEmptyStrings = true)]
         public string notes { get; set; }
     }
 }
