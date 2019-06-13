@@ -10,10 +10,10 @@
                 <label>Level Keahlian *</label>
                 <select class="form-control" name="skill_level_id" id="idSkillLevel">
                     <option value="">-Pilih-</option>
-                    <option value="1">satu</option>
+                    @*<option value="1">satu</option>
                     <option value="2">dua</option>
                     <option value="3">tiga</option>
-                    <option value="4">empat</option>
+                    <option value="4">empat</option>*@
                 </select>
             </td>
         </tr>
@@ -34,6 +34,23 @@
 
 <script>
     $(document).ready(function () {
+
+        var vSelect = '';
+
+        $.ajax({
+            url: '/Keahlian/Select',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    vSelect = vSelect +
+                        '<option value="' + d.skill_level_id + '">' +
+                            d.name +
+                            '</option>';
+                });
+                $('#idSkillLevel').append(vSelect); //memasukan data yg sudah di jahit ke dalam body
+            }
+        });
 
         $.ajax({
             url: '/Keahlian/AmbilData',
