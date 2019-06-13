@@ -12,8 +12,8 @@ namespace Xsis.Model
     {
         public DataContext() : base("Name=NgxsisConn")
         {
-            //Database.SetInitializer(new Initializer());
-            Database.SetInitializer<DataContext>(null);
+            Database.SetInitializer(new Initializer());
+            //Database.SetInitializer<DataContext>(null);
         }
 
         public virtual DbSet<AddrBook> AddrBook { get; set; }
@@ -47,6 +47,7 @@ namespace Xsis.Model
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Schedule_Type> Schedule_Type { get; set; }
         public virtual DbSet<Sertifikasi> Sertifikasi { get; set; }
+        public virtual DbSet<Skill_Level> Skill_Level { get; set; }
         public virtual DbSet<Sumber_Loker> Sumber_Loker { get; set; }
         public virtual DbSet<Test_Type> Test_Type { get; set; }
         public virtual DbSet<Time_Period> Time_Period { get; set; }
