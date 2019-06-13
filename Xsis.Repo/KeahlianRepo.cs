@@ -54,5 +54,36 @@ namespace Xsis.Repo
             }
         }
 
+        public static Keahlian GetByID(int ID)
+        {
+            Keahlian keahlian = new Keahlian();
+            using (DataContext db = new DataContext())
+            {
+                keahlian = db.Keahlian.Where(d => d.keahlian_id == ID).First();
+                return keahlian;
+            }
+        }
+
+        public static Boolean Deletekeahlian(int ID)
+        {
+            try
+            {
+                Keahlian dep;
+                using (DataContext db = new DataContext())
+                {
+                    dep = db.Keahlian.Where(d => d.keahlian_id == ID).First();
+                    dep.is_delete = true;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
     }
 }

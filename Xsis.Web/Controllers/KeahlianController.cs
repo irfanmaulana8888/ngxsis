@@ -37,5 +37,28 @@ namespace Xsis.Web.Controllers
             }
             return View();
         }
+
+        public ActionResult Edit(int ID)
+        {
+            return PartialView("_EditRazor",KeahlianRepo.GetByID(ID));
+        }
+
+        public ActionResult AmbilData(int ID)
+        {
+            return Json(KeahlianRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(int ID)
+        {
+            if (KeahlianRepo.Deletekeahlian(ID)) //non static if ( KeahlianRepo.Deletekeahlian(ID))
+            {
+                return Json(new { Hapus = "Berhasil" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Hapus = "Gagal" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

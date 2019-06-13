@@ -153,6 +153,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Keahlian\Index.cshtml" />
     <Content Include="Views\Keahlian\_Create.cshtml" />
+    <Content Include="Views\Keahlian\_Edit.cshtml" />
+    <Content Include="Views\Keahlian\_EditRazor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
