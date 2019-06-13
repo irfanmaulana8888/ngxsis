@@ -19,6 +19,10 @@ namespace Xsis.Web.Controllers
         {
             return Json(KeahlianRepo.GetAll(), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult Select()
+        {
+            return Json(KeahlianRepo.GetSelect(), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Create()
         {
             return PartialView("_Create");

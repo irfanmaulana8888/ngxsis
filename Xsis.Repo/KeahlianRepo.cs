@@ -29,6 +29,16 @@ namespace Xsis.Repo
             }
         }
 
+        public static List<Skill_Level> GetSelect()
+        {
+            List<Skill_Level> result = new List<Skill_Level>();
+            using (var db = new DataContext())
+            {
+                result = db.Skill_Level.ToList();
+                return result;
+            }
+        }
+
         public static Boolean Createkeahlian(Keahlian keahlianmdl)
         {
             try
