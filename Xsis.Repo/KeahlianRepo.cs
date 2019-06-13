@@ -12,16 +12,21 @@ namespace Xsis.Repo
         public static List<Keahlian> GetAll()
         {
             List<Keahlian> result = new List<Keahlian>();
-            using (DataContext db = new DataContext())
+            using (var db = new DataContext())
             {
-                result = db.Keahlian.ToList();
-                //var query = from t in db.Keahlian
-                //            where t.is_delete == false
-                //            select new { t.col1, t.col2, t.col3 };
-                //var myObject = query.SingleOrDefault();
+                //result = db.Keahlian.ToList();
 
+                result = (from t in db.Keahlian
+                          where t.is_delete == false
+                          select t).ToList();
+                //select new Keahlian { skill_name = t.skill_name, notes = t.notes, skill_level_id = t.skill_level_id }).ToList();
+
+
+                //result = (from item in db.Keahlian
+                //          where item.is_delete == false
+                //          select new Keahlian { item.skill_name }).ToList();
+                return result;
             }
-            return result;
         }
 
         public static Boolean Createkeahlian(Keahlian keahlianmdl)
@@ -31,6 +36,7 @@ namespace Xsis.Repo
                 Keahlian keahlian = new Keahlian();
                 using (DataContext db = new DataContext())
                 {
+                    keahlian.biodata_id = 1;
                     keahlian.created_by=keahlianmdl.created_by;
                     keahlian.created_on = DateTime.Now.Date;
                     keahlian.skill_name = keahlianmdl.skill_name;
