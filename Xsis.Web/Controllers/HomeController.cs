@@ -12,7 +12,7 @@ namespace Xsis.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            Session["foo"] = 1;
+            Session["foo"] = 99;
             return View();
         }
     }

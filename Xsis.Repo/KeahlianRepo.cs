@@ -64,15 +64,19 @@ namespace Xsis.Repo
             }
         }
 
-        public static Boolean Deletekeahlian(int ID)
+        
+        public static Boolean Deletekeahlian(int ID, Keahlian keahlianmdl)
         {
             try
             {
+
                 Keahlian dep;
                 using (DataContext db = new DataContext())
                 {
                     dep = db.Keahlian.Where(d => d.keahlian_id == ID).First();
                     dep.is_delete = true;
+                    dep.deleted_by = keahlianmdl.deleted_by;
+                    dep.deleted_on = DateTime.Now.Date;
                     db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -89,9 +93,16 @@ namespace Xsis.Repo
         {
             try
             {
+                Keahlian dep;
                 using (DataContext db = new DataContext())
                 {
-                    db.Entry(keahlian).State = System.Data.Entity.EntityState.Modified;
+                    dep = db.Keahlian.Where(d => d.keahlian_id == keahlian.keahlian_id).First();
+                    dep.modified_by = keahlian.modified_by;
+                    dep.modified_on = DateTime.Now.Date;
+                    dep.notes = keahlian.notes;
+                    dep.skill_level_id = keahlian.skill_level_id;
+                    dep.skill_name = keahlian.skill_name;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
                 return true;

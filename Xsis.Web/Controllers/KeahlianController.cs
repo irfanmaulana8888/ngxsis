@@ -48,9 +48,10 @@ namespace Xsis.Web.Controllers
             return Json(KeahlianRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Delete(int ID)
+        public ActionResult Delete(int ID, Keahlian keahlianmdl)
         {
-            if (KeahlianRepo.Deletekeahlian(ID)) //non static if ( KeahlianRepo.Deletekeahlian(ID))
+            keahlianmdl.deleted_by = Convert.ToInt64(Session["foo"]);
+            if (KeahlianRepo.Deletekeahlian(ID,keahlianmdl)) //non static if ( KeahlianRepo.Deletekeahlian(ID))
             {
                 return Json(new { Hapus = "Berhasil" }, JsonRequestBehavior.AllowGet);
             }
@@ -62,6 +63,7 @@ namespace Xsis.Web.Controllers
 
         public ActionResult EditSimpan(Keahlian keahlian)
         {
+            keahlian.modified_by = Convert.ToInt64(Session["foo"]);
             if (KeahlianRepo.Editkeahlian(keahlian))
             {
                 return Json(new { EditSimpan = "Berhasil" }, JsonRequestBehavior.AllowGet); //return json digunakan untuk memunculkan alert

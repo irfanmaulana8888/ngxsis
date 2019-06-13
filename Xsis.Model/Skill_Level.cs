@@ -21,19 +21,21 @@ namespace Xsis.Model
         [Column(TypeName = "Date")]
         public DateTime created_on { get; set; }
 
-        public long modified_by { get; set; }
+        public Nullable<long> modified_by { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime modified_on { get; set; }
+        public Nullable<DateTime> modified_on { get; set; }
 
-        public long deleted_by { get; set; }
+        public Nullable<long> deleted_by { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime deleted_on { get; set; }
+        public Nullable<DateTime> deleted_on { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
         public Boolean is_delete { get; set; }
 
         [Column(TypeName = "Varchar")]
+        [Required(AllowEmptyStrings = false)]
         [StringLength(50)]
         public string name { get; set; }
 
