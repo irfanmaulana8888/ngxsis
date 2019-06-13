@@ -60,5 +60,16 @@ namespace Xsis.Web.Controllers
             }
         }
 
+        public ActionResult EditSimpan(Keahlian keahlian)
+        {
+            if (KeahlianRepo.Editkeahlian(keahlian))
+            {
+                return Json(new { EditSimpan = "Berhasil" }, JsonRequestBehavior.AllowGet); //return json digunakan untuk memunculkan alert
+            }
+            else
+            {
+                return Json(new { EditSimpan = "Gagal" }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

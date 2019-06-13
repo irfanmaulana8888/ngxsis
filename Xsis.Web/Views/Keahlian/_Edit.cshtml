@@ -1,19 +1,19 @@
-﻿<form action="" method="post" id="idFrmSubmitKeahlian">
+﻿<form action="" method="post" id="idFrmEditKeahlian">
     <table class="table">
         <tr>
             <td>
                 <label>Nama Keahlian</label>
                 <input type="text" name="skill_name" class="form-control" id="idInpNamaKeahlian" placeholder="Nama Keahlian">
-                <input type="hidden" id="idget"/> 
+                <input type="hidden" name="keahlian_id" id="idget"/> 
             </td>
             <td>
                 <label>Level Keahlian *</label>
-                <select class="form-control" name="skill_level_id">
-                    <option>-Pilih-</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                <select class="form-control" name="skill_level_id" id="idSkillLevel">
+                    <option value="">-Pilih-</option>
+                    <option value="1">satu</option>
+                    <option value="2">dua</option>
+                    <option value="3">tiga</option>
+                    <option value="4">empat</option>
                 </select>
             </td>
         </tr>
@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <button type="button" class="btn btn-success" id="idBtnSubmitKeahlian">Submit</button>
+                <button type="button" class="btn btn-success" id="idBtnEditKeahlian">Submit</button>
                 <button type="button" class="btn btn-success" id="idBtnCancelKeahlian">Cancel</button>
             </td>
         </tr>
@@ -34,7 +34,7 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $.ajax({
             url: '/Keahlian/AmbilData',
             data: { ID: $('#idget').val() },
@@ -42,7 +42,40 @@
             success: function (mdl) {
                 debugger;
                 $('#idInpNamaKeahlian').val(mdl.skill_name);
+                $('#txtarea').val(mdl.notes);
+                $('#idSkillLevel').val(mdl.skill_level_id).selected;
             }
         });
+
+        $('#idBtnCancelKeahlian').click(function () {
+            $('#idMdlCreateKeahlian').close;
+            location.reload();
+        });
+
+        $('#idBtnEditKeahlian').click(function () {
+            debugger;
+            var vDatabarang = $('#idFrmEditKeahlian').serialize();
+            $.ajax({
+                url: '/Keahlian/EditSimpan',
+                data: vDatabarang,
+                method: 'Post',
+                success: function (mdl) {
+                    if (mdl.EditSimpan == "Berhasil") {
+                        debugger;
+                        alert("Data berhasil diEdit");
+                        //$('.modal').modal('hide');
+                        //$.modal.close();
+                        $('#idMdlEditKeahlian').close;
+                        location.reload();
+
+                    }
+                    else {
+                        debugger;
+                        alert("Data gagal diEdit");
+                    }
+                }
+            });
+        });
+
     });
 </script>

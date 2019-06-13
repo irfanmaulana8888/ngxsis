@@ -85,5 +85,23 @@ namespace Xsis.Repo
             }
         }
 
+        public static Boolean Editkeahlian(Keahlian keahlian)
+        {
+            try
+            {
+                using (DataContext db = new DataContext())
+                {
+                    db.Entry(keahlian).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
     }
 }
