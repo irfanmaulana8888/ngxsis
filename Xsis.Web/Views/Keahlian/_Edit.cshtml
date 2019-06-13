@@ -4,7 +4,7 @@
             <td>
                 <label>Nama Keahlian</label>
                 <input type="text" name="skill_name" class="form-control" id="idInpNamaKeahlian" placeholder="Nama Keahlian">
-
+                <input type="hidden" id="idget"/> 
             </td>
             <td>
                 <label>Level Keahlian *</label>
@@ -34,12 +34,14 @@
 
 <script>
     $(document).ready(function () {
-
+        
         $.ajax({
             url: '/Keahlian/AmbilData',
+            data: { ID: $('#idget').val() },
             method: 'Get',
             success: function (mdl) {
                 debugger;
+                $('#idInpNamaKeahlian').val(mdl.skill_name);
             }
         });
     });

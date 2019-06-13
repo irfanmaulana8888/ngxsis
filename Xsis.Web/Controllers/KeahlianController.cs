@@ -40,7 +40,7 @@ namespace Xsis.Web.Controllers
 
         public ActionResult Edit(int ID)
         {
-            return PartialView("_EditRazor",KeahlianRepo.GetByID(ID));
+            return PartialView("_Edit");
         }
 
         public ActionResult AmbilData(int ID)

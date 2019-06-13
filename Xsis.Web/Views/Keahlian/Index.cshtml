@@ -108,6 +108,7 @@
                         success: function (mdl) {
                             $('#idBodyEditKeahlian').empty();
                             $('#idBodyEditKeahlian').append(mdl);
+                            $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
                             $('#idMdlEditKeahlian').modal('show');
                             debugger;
                         },
