@@ -60,10 +60,10 @@
 
     $('#idBtnSubmitKeahlian').click(function () {
         debugger;
-        var vDatabarang = $('#idFrmSubmitKeahlian').serialize();
+        var vDatakeahlian = $('#idFrmSubmitKeahlian').serialize();
         $.ajax({
             url: '/Keahlian/Save',
-            data: vDatabarang,
+            data: vDatakeahlian,
             method: 'Post',
             success: function (mdl) {
                 debugger;

@@ -28,5 +28,57 @@ namespace Xsis.Repo
                 return result;
             }
         }
+
+        public static Boolean Createpekerjaan(Riwayat_Pekerjaan pekerjaanmdl)
+        {
+            try
+            {
+                //Riwayat_Pekerjaan pekerjaan = new Riwayat_Pekerjaan();
+                using (DataContext db = new DataContext())
+                {
+                    //pekerjaan.biodata_id = 1;
+                    //pekerjaan.created_by = keahlianmdl.created_by;
+                    //pekerjaan.created_on = DateTime.Now.Date;
+                    //pekerjaan.skill_name = keahlianmdl.skill_name;
+                    //pekerjaan.skill_level_id = keahlianmdl.skill_level_id;
+                    //pekerjaan.notes = keahlianmdl.notes;
+                    pekerjaanmdl.biodata_id = 1;
+                    pekerjaanmdl.created_by = pekerjaanmdl.created_by;
+                    pekerjaanmdl.created_on = DateTime.Now.Date;
+                    db.Riwayat_Pekerjaan.Add(pekerjaanmdl);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public static Boolean Deletepekerjaan(int ID, Riwayat_Pekerjaan pekerjaanmdl)
+        {
+            try
+            {
+
+                Riwayat_Pekerjaan dep;
+                using (DataContext db = new DataContext())
+                {
+                    dep = db.Riwayat_Pekerjaan.Where(d => d.id == ID).First();
+                    dep.is_delete = true;
+                    dep.deleted_by = pekerjaanmdl.deleted_by;
+                    dep.deleted_on = DateTime.Now.Date;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 }
