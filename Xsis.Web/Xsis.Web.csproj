@@ -157,6 +157,7 @@
     <Content Include="Views\Keahlian\_Create.cshtml" />
     <Content Include="Views\Keahlian\_Edit.cshtml" />
     <Content Include="Views\Pekerjaan\Index.cshtml" />
+    <Content Include="Views\Pekerjaan\_Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
