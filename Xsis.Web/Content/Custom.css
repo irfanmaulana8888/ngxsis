@@ -1,22 +1,22 @@
 ﻿body {
 }
 .biru{
-    color:blue;
+    color:#000080;
     font-weight:bold;
 }
 .birutext{
-    color:blue;
+    color:#000080;
 }
 .birubg{
-    background-color:blue;
+    background-color:#000080;
     color:white;
 }
 .biruwoy{
-    background-color:blue;
+    background-color:#000080;
     color:white;
 }
 .biruwoy:hover{
-    background-color:green;
+    background-color:blue;
 }
 .orenwoy{
     background-color:orangered;
@@ -26,5 +26,5 @@
     background-color:red;
 }
 .table{
-    color:blue;
+    color:#000080;
 }

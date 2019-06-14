@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeahlianController.cs" />
+    <Compile Include="Controllers\PekerjaanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -155,7 +156,7 @@
     <Content Include="Views\Keahlian\Index.cshtml" />
     <Content Include="Views\Keahlian\_Create.cshtml" />
     <Content Include="Views\Keahlian\_Edit.cshtml" />
-    <Content Include="Views\Keahlian\_EditRazor.cshtml" />
+    <Content Include="Views\Pekerjaan\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
