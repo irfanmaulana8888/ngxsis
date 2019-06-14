@@ -14,7 +14,7 @@ namespace Xsis.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public long keahlian_id { get; set; }
+        public long id { get; set; }
 
 
         [Required(AllowEmptyStrings = false)]

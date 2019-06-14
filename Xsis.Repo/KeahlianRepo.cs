@@ -69,7 +69,7 @@ namespace Xsis.Repo
             Keahlian keahlian = new Keahlian();
             using (DataContext db = new DataContext())
             {
-                keahlian = db.Keahlian.Where(d => d.keahlian_id == ID).First();
+                keahlian = db.Keahlian.Where(d => d.id == ID).First();
                 return keahlian;
             }
         }
@@ -83,7 +83,7 @@ namespace Xsis.Repo
                 Keahlian dep;
                 using (DataContext db = new DataContext())
                 {
-                    dep = db.Keahlian.Where(d => d.keahlian_id == ID).First();
+                    dep = db.Keahlian.Where(d => d.id == ID).First();
                     dep.is_delete = true;
                     dep.deleted_by = keahlianmdl.deleted_by;
                     dep.deleted_on = DateTime.Now.Date;
@@ -106,7 +106,7 @@ namespace Xsis.Repo
                 Keahlian dep;
                 using (DataContext db = new DataContext())
                 {
-                    dep = db.Keahlian.Where(d => d.keahlian_id == keahlian.keahlian_id).First();
+                    dep = db.Keahlian.Where(d => d.id == keahlian.id).First();
                     dep.modified_by = keahlian.modified_by;
                     dep.modified_on = DateTime.Now.Date;
                     dep.notes = keahlian.notes;
