@@ -1,0 +1,30 @@
+﻿body {
+}
+.biru{
+    color:blue;
+    font-weight:bold;
+}
+.birutext{
+    color:blue;
+}
+.birubg{
+    background-color:blue;
+    color:white;
+}
+.biruwoy{
+    background-color:blue;
+    color:white;
+}
+.biruwoy:hover{
+    background-color:green;
+}
+.orenwoy{
+    background-color:orangered;
+    color:white;
+}
+.orenwoy:hover{
+    background-color:red;
+}
+.table{
+    color:blue;
+}
