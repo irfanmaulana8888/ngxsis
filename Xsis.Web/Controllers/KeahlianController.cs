@@ -52,6 +52,11 @@ namespace Xsis.Web.Controllers
             return Json(KeahlianRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DeleteCfr(int ID)
+        {
+            return PartialView("_Delete");
+        }
+
         public ActionResult Delete(int ID, Keahlian keahlianmdl)
         {
             keahlianmdl.deleted_by = Convert.ToInt64(Session["foo"]);

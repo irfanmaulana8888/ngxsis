@@ -39,6 +39,11 @@ namespace Xsis.Web.Controllers
             }
         }
 
+        public ActionResult DeleteCfr(int ID)
+        {
+            return PartialView("_Delete");
+        }
+
         public ActionResult Delete(int ID, Riwayat_Pekerjaan pekerjaanmdl)
         {
             pekerjaanmdl.deleted_by = Convert.ToInt64(Session["foo"]);
@@ -49,6 +54,29 @@ namespace Xsis.Web.Controllers
             else
             {
                 return Json(new { Hapus = "Gagal" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult Edit(int ID)
+        {
+            return PartialView("_Edit");
+        }
+
+        public ActionResult AmbilData(int ID)
+        {
+            return Json(PekerjaanRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditSimpan(Riwayat_Pekerjaan pekerjaan)
+        {
+            pekerjaan.modified_by = Convert.ToInt64(Session["foo"]);
+            if (PekerjaanRepo.Editpekerjaan(pekerjaan))
+            {
+                return Json(new { EditSimpan = "Berhasil" }, JsonRequestBehavior.AllowGet); //return json digunakan untuk memunculkan alert
+            }
+            else
+            {
+                return Json(new { EditSimpan = "Gagal" }, JsonRequestBehavior.AllowGet);
             }
         }
     }

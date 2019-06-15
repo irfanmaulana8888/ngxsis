@@ -80,5 +80,50 @@ namespace Xsis.Repo
                 return false;
             }
         }
+
+        public static Riwayat_Pekerjaan GetByID(int ID)
+        {
+            Riwayat_Pekerjaan pekerjaan = new Riwayat_Pekerjaan();
+            using (DataContext db = new DataContext())
+            {
+                pekerjaan = db.Riwayat_Pekerjaan.Where(d => d.id == ID).First();
+                return pekerjaan;
+            }
+        }
+
+        public static Boolean Editpekerjaan(Riwayat_Pekerjaan pekerjaan)
+        {
+            try
+            {
+                Riwayat_Pekerjaan dep;
+                using (DataContext db = new DataContext())
+                {
+                    dep = db.Riwayat_Pekerjaan.Where(d => d.id == pekerjaan.id).First();
+                    dep.modified_by = pekerjaan.modified_by;
+                    dep.modified_on = DateTime.Now.Date;
+                    dep.company_name = pekerjaan.company_name;
+                    dep.city = pekerjaan.city;
+                    dep.country = pekerjaan.country;
+                    dep.join_month = pekerjaan.join_month;
+                    dep.join_year = pekerjaan.join_year;
+                    dep.resign_month = pekerjaan.resign_month;
+                    dep.resign_year = pekerjaan.resign_year;
+                    dep.last_position = pekerjaan.last_position;
+                    dep.income = pekerjaan.income;
+                    dep.is_it_related = pekerjaan.is_it_related;
+                    dep.about_job = pekerjaan.about_job;
+                    dep.exit_reason = pekerjaan.exit_reason;
+                    dep.notes = pekerjaan.notes;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 }

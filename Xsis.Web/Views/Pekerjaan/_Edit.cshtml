@@ -1,9 +1,10 @@
-﻿<form action="" method="post" id="idFrmSubmitPekerjaan">
+﻿<form action="" method="post" id="idFrmEditPekerjaan">
     <table class="table">
         <tr>
             <td colspan="2">
                 <label>Nama Perusahaan/Instansi*</label>
                 <input type="text" name="company_name" class="form-control" id="idInpNamaPerusahaan" placeholder="Nama Perusahaan">
+                <input type="hidden" name="id" id="idget" /> 
             </td>
             <td width="150">
                 <label>Kota</label>
@@ -114,7 +115,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <input type="checkbox" name="is_it_related" id="myCheckBox" value=true> <label>IT Related ?</label>
+                <input type="checkbox" name="is_it_related" id="idCheckBox" value=true> <label>IT Related ?</label>
             </td>
         </tr>
         <tr>
@@ -138,31 +139,56 @@
         <tr>
             <td colspan="4" align="right">
                 <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">Cancel</button>
-                <button type="button" class="btn biruwoy" id="idBtnSubmitPekerjaan">Submit</button>
+                <button type="button" class="btn biruwoy" id="idBtnEditPekerjaan">Submit</button>
             </td>
         </tr>
     </table>
 </form>
 <script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '/Pekerjaan/AmbilData',
+            data: { ID: $('#idget').val() },
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $('#idInpNamaPerusahaan').val(mdl.company_name);
+                $('#idInpCity').val(mdl.city);
+                $('#idInpCountry').val(mdl.country);
+                $('#idWaktuMasuk').val(mdl.join_month).selected;
+                $('#idTahunMasuk').val(mdl.join_year).selected;
+                $('#idWaktuKeluar').val(mdl.resign_month).selected;
+                $('#idTahunKeluar').val(mdl.resign_year).selected;
+                $('#idInpNamaPosisi').val(mdl.last_position);
+                $('#idInpIncome').val(mdl.income);
+                var cek = mdl.is_it_related;
+                $('#idCheckBox').attr('checked', cek);
+                $('#idKeterangan').val(mdl.about_job);
+                $('#idExit').val(mdl.exit_reason);
+                $('#idCatatan').val(mdl.notes);
+            }
+        });
+
     $('#idBtnCancelPekerjaan').click(function () {
-        $('#idMdlCreatePekerjaan').close;
+        $('#idMdlEditPekerjaan').close;
         location.reload();
     });
 
-    $('#idBtnSubmitPekerjaan').click(function () {
+    $('#idBtnEditPekerjaan').click(function () {
         debugger;
-        var vDatapekerjaan = $('#idFrmSubmitPekerjaan').serialize();
+        var vDatapekerjaan = $('#idFrmEditPekerjaan').serialize();
         $.ajax({
-            url: '/Pekerjaan/Save',
+            url: '/Pekerjaan/EditSimpan',
             data: vDatapekerjaan,
             method: 'Post',
             success: function (mdl) {
                 debugger;
-                if (mdl.Simpan == "Berhasil") {
+                if (mdl.EditSimpan == "Berhasil") {
                     alert("Data berhasil disimpan");
                     //$('.modal').modal('hide');
                     //$.modal.close();
-                    $('#idMdlCreatePekerjaan').close;
+                    $('#idMdlEditPekerjaan').close;
                     location.reload();
                 }
                 else {
@@ -171,5 +197,6 @@
                 }
             }
         });
+    });
     });
 </script>

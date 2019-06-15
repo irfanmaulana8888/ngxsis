@@ -65,6 +65,28 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="idMdlHapusKeahlian" tabindex="-1" role="dialog">
+    <div class="modal-dialog tengahpls" role="document">
+        <div class="modal-content lebarpls">
+            <div class="modal-header merahbg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Hapus Keahlian ?</h4>
+            </div>
+            <div class="modal-body" id="idBodyHapusKeahlian">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <script>
     var vDataSkill =
           { 1:'Novice',2:'Beginner',3:'Competent',4:'Pro',5:'Expert' };
@@ -91,7 +113,7 @@
                                 '</button>'+
                                 '<ul class="dropdown-menu">'+
                                 '<li><a class="UbahKeahlian" dataID="'+ d.id +'" href="#">Ubah</a></li>'+
-                                '<li><a class="HapusKeahlian" dataID="' + d.id + '" href="#">Hapus</a></li>' +
+                                '<li><a class="HapusKeahlianCfr" dataID="' + d.id + '" href="#">Hapus</a></li>' +
                                 '</ul>' +
                              '</td>' +
                             '</tr>';
@@ -122,25 +144,24 @@
 
                 });
 
-                $('.HapusKeahlian').click(function () {
+                $('.HapusKeahlianCfr').click(function () {
                     var vDataID = parseInt($(this).attr('dataID'));
                     debugger;
-                    var r = confirm("Anda Yakin Ingin Menghapus Data ??");
-                    if (r == true) {
-                        $.ajax({
-                            url: '/Keahlian/Delete',
-                            data: { ID: vDataID },
-                            method: 'Post',
-                            success: function (mdl) {
-                                alert('Berhasil Menghapus Data');
-                                location.reload();
-                                debugger;
-                            },
-                            error: function (mdl) {
-                                debugger;
-                            }
-                        });
-                    }
+                    $.ajax({
+                        url: '/Keahlian/DeleteCfr',
+                        data: { ID: vDataID },
+                        method: 'Post',
+                        success: function (mdl) {
+                            $('#idBodyHapusKeahlian').empty();
+                            $('#idBodyHapusKeahlian').append(mdl);
+                            $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
+                            $('#idMdlHapusKeahlian').modal('show');
+                            debugger;
+                        },
+                        error: function (mdl) {
+                            debugger;
+                        }
+                    });
                 });
             }
         });

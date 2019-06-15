@@ -72,10 +72,10 @@
 
         $('#idBtnEditKeahlian').click(function () {
             debugger;
-            var vDatabarang = $('#idFrmEditKeahlian').serialize();
+            var vDatakeahlian = $('#idFrmEditKeahlian').serialize();
             $.ajax({
                 url: '/Keahlian/EditSimpan',
-                data: vDatabarang,
+                data: vDatakeahlian,
                 method: 'Post',
                 success: function (mdl) {
                     if (mdl.EditSimpan == "Berhasil") {

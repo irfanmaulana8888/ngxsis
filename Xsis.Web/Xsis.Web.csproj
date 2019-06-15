@@ -158,6 +158,9 @@
     <Content Include="Views\Keahlian\_Edit.cshtml" />
     <Content Include="Views\Pekerjaan\Index.cshtml" />
     <Content Include="Views\Pekerjaan\_Create.cshtml" />
+    <Content Include="Views\Pekerjaan\_Edit.cshtml" />
+    <Content Include="Views\Pekerjaan\_Delete.cshtml" />
+    <Content Include="Views\Keahlian\_Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
