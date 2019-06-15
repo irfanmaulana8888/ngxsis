@@ -32,7 +32,6 @@
     </table>
 </form>
 <script>
-
     //$(document).ready(function () {
     //    var vSelect = '';
 
@@ -58,8 +57,18 @@
         location.reload();
     });
 
+    $('.ClBtnCloseKeahlian').click(function () {
+        $('#idMdlCreateKeahlian').close;
+        location.reload();
+    });
+
     $('#idBtnSubmitKeahlian').click(function () {
         debugger;
+        var skill = $('#idSkillLevel').val();
+        if (skill == "") {
+            alert('Level Keahlian Tidak Boleh Kosong');
+        }
+        else{
         var vDatakeahlian = $('#idFrmSubmitKeahlian').serialize();
         $.ajax({
             url: '/Keahlian/Save',
@@ -73,7 +82,6 @@
                     //$.modal.close();
                     $('#idMdlCreateKeahlian').close;
                     location.reload();
-
                 }
                 else {
                     debugger;
@@ -81,5 +89,6 @@
                 }
             }
         });
+        }
     });
 </script>
