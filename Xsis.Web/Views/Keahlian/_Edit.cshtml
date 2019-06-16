@@ -80,27 +80,33 @@
 
         $('#idBtnEditKeahlian').click(function () {
             debugger;
-            var vDatakeahlian = $('#idFrmEditKeahlian').serialize();
-            $.ajax({
-                url: '/Keahlian/EditSimpan',
-                data: vDatakeahlian,
-                method: 'Post',
-                success: function (mdl) {
-                    if (mdl.EditSimpan == "Berhasil") {
-                        debugger;
-                        alert("Data berhasil diEdit");
-                        //$('.modal').modal('hide');
-                        //$.modal.close();
-                        $('#idMdlEditKeahlian').close;
-                        location.reload();
+            var skill = $('#idSkillLevel').val();
+            if (skill == "") {
+                alert('Level Keahlian Tidak Boleh Kosong');
+            }
+            else {
+                var vDatakeahlian = $('#idFrmEditKeahlian').serialize();
+                $.ajax({
+                    url: '/Keahlian/EditSimpan',
+                    data: vDatakeahlian,
+                    method: 'Post',
+                    success: function (mdl) {
+                        if (mdl.EditSimpan == "Berhasil") {
+                            debugger;
+                            alert("Data berhasil diEdit");
+                            //$('.modal').modal('hide');
+                            //$.modal.close();
+                            $('#idMdlEditKeahlian').close;
+                            location.reload();
 
+                        }
+                        else {
+                            debugger;
+                            alert("Data gagal diEdit");
+                        }
                     }
-                    else {
-                        debugger;
-                        alert("Data gagal diEdit");
-                    }
-                }
-            });
+                });
+            }
         });
 
     });

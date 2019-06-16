@@ -137,14 +137,19 @@
         </tr>
         <tr>
             <td colspan="4" align="right">
-                <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">Cancel</button>
-                <button type="button" class="btn biruwoy" id="idBtnSubmitPekerjaan">Submit</button>
+                <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">&nbsp;Batal&nbsp;</button>
+                <button type="button" class="btn biruwoy" id="idBtnSubmitPekerjaan">Simpan</button>
             </td>
         </tr>
     </table>
 </form>
 <script>
     $('#idBtnCancelPekerjaan').click(function () {
+        $('#idMdlCreatePekerjaan').close;
+        location.reload();
+    });
+
+    $('.ClBtnClosePekerjaan').click(function () {
         $('#idMdlCreatePekerjaan').close;
         location.reload();
     });
