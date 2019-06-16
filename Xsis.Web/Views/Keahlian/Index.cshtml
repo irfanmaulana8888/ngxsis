@@ -7,13 +7,13 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
-                <td>
+            <tr style="border-bottom:3px solid blue;">
+                <td colspan="3">
                     <h4 class="biru">Keahlian<button type="button" class="btn btn-link" id="idBtnCreateKeahlian"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></h4>
                 </td>
             </tr>
-            <tr class="biru">
-                <td>NAMA KEAHLIAN</td>
+            <tr class="biru" style="border-bottom:3px solid blue;">
+                <td >NAMA KEAHLIAN</td>
                 <td>LEVEL KEAHLIAN</td>
                 <td>#</td>
             </tr>
@@ -102,7 +102,7 @@
                 debugger;
                 $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
                     debugger;
-                    vStrHtml = vStrHtml + '<tr class="birutext">' +
+                    vStrHtml = vStrHtml + '<tr class="birutext" style="border-bottom:2px solid blue;">' +
                             '<td>' + d.skill_name + '</td>' +
                             '<td>' + vDataSkill[d.skill_level_id] + '</td>' +
                             //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +

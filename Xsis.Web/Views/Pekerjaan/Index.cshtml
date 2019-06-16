@@ -6,12 +6,12 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
-                <td>
+            <tr style="border-bottom:3px solid blue;">
+                <td colspan="3">
                     <h4 class="biru">Pengalaman Kerja<button type="button" class="btn btn-link" id="idBtnCreatePekerjaan"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></h4>
                 </td>
             </tr>
-            <tr class="biru">
+            <tr class="biru" style="border-bottom:3px solid blue;">
                 <td>DETAIL PEKERJAAN</td>
                 <td>CATATAN</td>
                 <td>#</td>
@@ -116,7 +116,7 @@
                         d.notes = '-';
                     }
 
-                    vStrHtml = vStrHtml + '<tr class="birutext">' +
+                    vStrHtml = vStrHtml + '<tr class="birutext" style="border-bottom:2px solid blue;">' +
                             '<td>' + d.company_name + '&nbsp;(' + d.join_year + '-' + d.join_month + '&nbsp; s/d &nbsp;' +
                             d.resign_year + '-' + d.resign_month + ')' +
                             '</td>' +
