@@ -60,7 +60,7 @@
                 </select>
             </td>
             <td>
-                <label>Waktu Keluar*</label>
+                <label>Waktu Keluar</label>
                 <select class="form-control  inputbiru" name="resign_month" id="idWaktuKeluar">
                     <option value="">-Pilih Bulan-</option>
                     <option value="1">Januari</option>
@@ -138,8 +138,8 @@
         </tr>
         <tr>
             <td colspan="4" align="right">
-                <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">Cancel</button>
-                <button type="button" class="btn biruwoy" id="idBtnEditPekerjaan">Submit</button>
+                <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">&nbsp;Batal&nbsp;</button>
+                <button type="button" class="btn biruwoy" id="idBtnEditPekerjaan">Simpan</button>
             </td>
         </tr>
     </table>
@@ -182,26 +182,48 @@
 
     $('#idBtnEditPekerjaan').click(function () {
         debugger;
-        var vDatapekerjaan = $('#idFrmEditPekerjaan').serialize();
-        $.ajax({
-            url: '/Pekerjaan/EditSimpan',
-            data: vDatapekerjaan,
-            method: 'Post',
-            success: function (mdl) {
-                debugger;
-                if (mdl.EditSimpan == "Berhasil") {
-                    alert("Data berhasil disimpan");
-                    //$('.modal').modal('hide');
-                    //$.modal.close();
-                    $('#idMdlEditPekerjaan').close;
-                    location.reload();
-                }
-                else {
+        var company = $('#idInpNamaPerusahaan').val();
+        var bulan = $('#idWaktuMasuk').val();
+        var tahun = $('#idTahunMasuk').val();
+        var posisi = $('#idInpNamaPosisi').val();
+        if (company == "") {
+            alert('Nama Perusahaan Tidak Boleh Kosong');
+            $('#idInpNamaPerusahaan').focus();
+        }
+        else if (bulan == "") {
+            alert('Waktu Masuk Bulan Tidak Boleh Kosong');
+            $('#idWaktuMasuk').focus();
+        }
+        else if (tahun == "") {
+            alert('Waktu Masuk Tahun Tidak Boleh Kosong');
+            $('#idTahunMasuk').focus();
+        }
+        else if (posisi == "") {
+            alert('Posisi Terakhir Tidak Boleh Kosong');
+            $('#idInpNamaPosisi').focus();
+        }
+        else {
+            var vDatapekerjaan = $('#idFrmEditPekerjaan').serialize();
+            $.ajax({
+                url: '/Pekerjaan/EditSimpan',
+                data: vDatapekerjaan,
+                method: 'Post',
+                success: function (mdl) {
                     debugger;
-                    alert("Data gagal disimpan");
+                    if (mdl.EditSimpan == "Berhasil") {
+                        alert("Data berhasil disimpan");
+                        //$('.modal').modal('hide');
+                        //$.modal.close();
+                        $('#idMdlEditPekerjaan').close;
+                        location.reload();
+                    }
+                    else {
+                        debugger;
+                        alert("Data gagal disimpan");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
     });
 </script>

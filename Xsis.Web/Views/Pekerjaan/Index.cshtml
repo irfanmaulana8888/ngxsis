@@ -93,6 +93,7 @@
 
         var vStrHtml = '';
 
+
         $.ajax({
             url: '/Pekerjaan/Tampil',
             method: 'Get',
@@ -100,8 +101,24 @@
                 debugger;
                 $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
                     debugger;
+                    if (d.resign_year == null) {
+                        debugger;
+                        d.resign_year = '';
+                        d.resign_month = '';
+                    }
+                    else {
+                        debugger;
+                        d.resign_year = d.resign_year;
+                        d.resign_month = d.resign_month;
+                    }
+
+                    if (d.notes == null) {
+                        d.notes = '-';
+                    }
+
                     vStrHtml = vStrHtml + '<tr class="birutext">' +
-                            '<td>' + d.company_name + '&nbsp;(' + d.join_year + '-' + d.join_month + '&nbsp; s/d &nbsp;' + d.resign_year + '-' + d.resign_month + ')'+
+                            '<td>' + d.company_name + '&nbsp;(' + d.join_year + '-' + d.join_month + '&nbsp; s/d &nbsp;' +
+                            d.resign_year + '-' + d.resign_month + ')' +
                             '</td>' +
                             '<td>' + d.notes + '</td>' +
                             //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +

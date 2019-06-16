@@ -83,6 +83,7 @@
             var skill = $('#idSkillLevel').val();
             if (skill == "") {
                 alert('Level Keahlian Tidak Boleh Kosong');
+                $('#idSkillLevel').focus();
             }
             else {
                 var vDatakeahlian = $('#idFrmEditKeahlian').serialize();
