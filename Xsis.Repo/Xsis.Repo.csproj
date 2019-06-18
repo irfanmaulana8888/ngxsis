@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddrRepo.cs" />
     <Compile Include="BiodataRepo.cs" />
     <Compile Include="KeahlianRepo.cs" />
     <Compile Include="PekerjaanRepo.cs" />

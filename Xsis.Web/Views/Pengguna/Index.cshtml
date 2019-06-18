@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="table-responsive">
+<div class="table-responsive" style="height:600px;">
     <br />
     <div class="autocomplete" style="width:445px;">
         <label style="background-color:darkblue; font-size:20px; border-radius:5px;">
@@ -151,7 +151,23 @@ function autocomplete(inp, arr) {
                     debugger;
                     $('#idFullName').val(mdl.fullname);
                     $('#idUserName').val(mdl.email);
-                    document.getElementById("idHps").disabled = true;
+                    document.getElementById("idHps").disabled = false;
+
+                    //if ($('#idUserName').val != "") {
+                    //    debugger;
+                    //    $.ajax({
+                    //        url: '/Addr/AmbilData',
+                    //        data: { ID: $('#idUserName').val() },
+                    //        method: 'Get',
+                    //        success: function (mdl) {
+                    //            debugger;
+                    //            document.getElementById("idHps").disabled = false;
+                    //        },
+                    //        error: function (mdl) {
+                    //            document.getElementById("idHps").disabled = true;
+                    //        }
+                    //    });
+                    //}
                 }
             });
             debugger;

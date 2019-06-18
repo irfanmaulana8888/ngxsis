@@ -48,7 +48,7 @@ namespace Xsis.Repo
                 {
                     keahlian.biodata_id = 1;
                     keahlian.created_by=keahlianmdl.created_by;
-                    keahlian.created_on = DateTime.Now.Date;
+                    keahlian.created_on = DateTime.Now;
                     keahlian.skill_name = keahlianmdl.skill_name;
                     keahlian.skill_level_id = keahlianmdl.skill_level_id;
                     keahlian.notes = keahlianmdl.notes;
@@ -86,7 +86,7 @@ namespace Xsis.Repo
                     dep = db.Keahlian.Where(d => d.id == ID).First();
                     dep.is_delete = true;
                     dep.deleted_by = keahlianmdl.deleted_by;
-                    dep.deleted_on = DateTime.Now.Date;
+                    dep.deleted_on = DateTime.Now;
                     db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -108,7 +108,7 @@ namespace Xsis.Repo
                 {
                     dep = db.Keahlian.Where(d => d.id == keahlian.id).First();
                     dep.modified_by = keahlian.modified_by;
-                    dep.modified_on = DateTime.Now.Date;
+                    dep.modified_on = DateTime.Now;
                     dep.notes = keahlian.notes;
                     dep.skill_level_id = keahlian.skill_level_id;
                     dep.skill_name = keahlian.skill_name;

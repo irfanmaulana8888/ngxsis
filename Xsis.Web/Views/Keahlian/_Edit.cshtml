@@ -10,11 +10,11 @@
                 <label>Level Keahlian *</label>
                 <select class="form-control" name="skill_level_id" style="border:2px solid blue;" id="idSkillLevel">
                     <option value="">-Pilih-</option>
-                    <option value="1">Novice</option>
+                    @*<option value="1">Novice</option>
                     <option value="2">Beginner</option>
                     <option value="3">Competent</option>
                     <option value="4">Pro</option>
-                    <option value="5">Expert</option>
+                    <option value="5">Expert</option>*@
                 </select>
             </td>
         </tr>
@@ -37,22 +37,22 @@
 
     $(document).ready(function () {
 
-        //var vSelect = '';
+        var vSelect = '';
 
-        //$.ajax({
-        //    url: '/Keahlian/Select',
-        //    method: 'Get',
-        //    success: function (mdl) {
-        //        debugger;
-        //        $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
-        //            vSelect = vSelect +
-        //                '<option value="' + d.skill_level_id + '">' +
-        //                    d.name +
-        //                    '</option>';
-        //        });
-        //        $('#idSkillLevel').append(vSelect); //memasukan data yg sudah di jahit ke dalam body
-        //    }
-        //});
+        $.ajax({
+            url: '/Keahlian/Select',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    vSelect = vSelect +
+                        '<option value="' + d.skill_level_id + '">' +
+                            d.name +
+                            '</option>';
+                });
+                $('#idSkillLevel').append(vSelect); //memasukan data yg sudah di jahit ke dalam body
+            }
+        });
 
         $.ajax({
             url: '/Keahlian/AmbilData',

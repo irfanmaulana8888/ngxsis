@@ -7,23 +7,17 @@ using Xsis.Repo;
 
 namespace Xsis.Web.Controllers
 {
-    public class PenggunaController : Controller
+    public class AddrController : Controller
     {
-        // GET: Pengguna
+        // GET: Addr
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Tampil()
-        {
-            return Json(PenggunaRepo.GetAll(), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult AmbilData(string ID)
         {
-            return Json(PenggunaRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
+            return Json(AddrRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

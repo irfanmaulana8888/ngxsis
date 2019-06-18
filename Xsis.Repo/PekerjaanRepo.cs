@@ -44,7 +44,7 @@ namespace Xsis.Repo
                     //pekerjaan.notes = keahlianmdl.notes;
                     pekerjaanmdl.biodata_id = 1;
                     pekerjaanmdl.created_by = pekerjaanmdl.created_by;
-                    pekerjaanmdl.created_on = DateTime.Now.Date;
+                    pekerjaanmdl.created_on = DateTime.Now;
                     db.Riwayat_Pekerjaan.Add(pekerjaanmdl);
                     db.SaveChanges();
                 }
@@ -68,7 +68,7 @@ namespace Xsis.Repo
                     dep = db.Riwayat_Pekerjaan.Where(d => d.id == ID).First();
                     dep.is_delete = true;
                     dep.deleted_by = pekerjaanmdl.deleted_by;
-                    dep.deleted_on = DateTime.Now.Date;
+                    dep.deleted_on = DateTime.Now;
                     db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -100,7 +100,7 @@ namespace Xsis.Repo
                 {
                     dep = db.Riwayat_Pekerjaan.Where(d => d.id == pekerjaan.id).First();
                     dep.modified_by = pekerjaan.modified_by;
-                    dep.modified_on = DateTime.Now.Date;
+                    dep.modified_on = DateTime.Now;
                     dep.company_name = pekerjaan.company_name;
                     dep.city = pekerjaan.city;
                     dep.country = pekerjaan.country;

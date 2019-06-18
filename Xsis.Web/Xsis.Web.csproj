@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AddrController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeahlianController.cs" />
     <Compile Include="Controllers\PekerjaanController.cs" />
@@ -173,6 +174,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Addr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xsis.Model\Xsis.Model.csproj">
