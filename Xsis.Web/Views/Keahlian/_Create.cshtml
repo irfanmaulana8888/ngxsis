@@ -49,8 +49,7 @@
         <tr>
             <td colspan="2" align="right">
                 <button type="button" class="btn orenwoy" id="idBtnCancelKeahlian">&nbsp;Batal&nbsp;</button>
-                <button type="button" class="btn biruwoy" id="idBtnSubmitKeahlian">Simpan</button>
-                <button type="submit">bisa woy</button>
+                <button type="submit" class="btn biruwoy" id="idBtnSubmitKeahlian">Simpan</button>
             </td>
         </tr>
     </table>
@@ -160,7 +159,7 @@ function validateElement(element) {
     if (validators[rule](element)) {
       // If the function returns true, all is fine.
         debugger;
-        simpankeahlian();
+        return;
     } else {
       // If it returns false, the
       // validation failed.
@@ -251,6 +250,9 @@ form.addEventListener("submit", event => {
   if (formIsValid === false) {
     form.classList.add("invalid");
     event.preventDefault();
+  } else {
+      debugger;
+      simpankeahlian();
   }
 });
 </script>

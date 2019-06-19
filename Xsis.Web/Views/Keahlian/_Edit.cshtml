@@ -1,14 +1,34 @@
-﻿<form action="" method="post" id="idFrmEditKeahlian">
+﻿<style type="text/css">
+    [data-validation-message] {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+        [data-validation-message].message-visible {
+            display: block;
+        }
+
+    .blueborder {
+        border-color: blue;
+    }
+
+        .blueborder.invalid {
+            border-color: red;
+        }
+</style>
+
+<form action="" method="post" id="idFrmEditKeahlian">
     <table class="table">
         <tr>
             <td>
                 <label>Nama Keahlian</label>
-                <input type="text" name="skill_name" class="form-control" style="border:2px solid blue;" id="idInpNamaKeahlian" placeholder="Nama Keahlian">
+                <input type="text" name="skill_name" class="form-control blueborder" id="idInpNamaKeahlian" placeholder="Nama Keahlian">
                 <input type="hidden" name="id" id="idget"/> 
             </td>
             <td>
                 <label>Level Keahlian *</label>
-                <select class="form-control" name="skill_level_id" style="border:2px solid blue;" id="idSkillLevel">
+                <select class="form-control blueborder" data-validate="required" name="skill_level_id" id="idSkillLevel">
                     <option value="">-Pilih-</option>
                     @*<option value="1">Novice</option>
                     <option value="2">Beginner</option>
@@ -16,18 +36,23 @@
                     <option value="4">Pro</option>
                     <option value="5">Expert</option>*@
                 </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Level Keahlian Harus Diisi.
+                </small>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <label>Catatan</label>
-                <textarea class="form-control" id="txtarea" style="border:2px solid blue;" name="notes" rows="3" ></textarea>
+                <textarea class="form-control blueborder" id="txtarea" name="notes" rows="3" ></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="right">
                 <button type="button" class="btn orenwoy" id="idBtnCancelKeahlian">Batal</button>
-                <button type="button" class="btn biruwoy" id="idBtnEditKeahlian">Simpan</button>
+                <button type="submit" class="btn biruwoy" id="idBtnEditKeahlian">Simpan</button>
             </td>
         </tr>
     </table>
@@ -77,15 +102,19 @@
             $('#idMdlEditKeahlian').close;
             location.reload();
         });
+    });
 
-        $('#idBtnEditKeahlian').click(function () {
+
+        function editkeahlian(){
+        //$('#idBtnEditKeahlian').click(function () {
+        //    debugger;
+        //    var skill = $('#idSkillLevel').val();
+        //    if (skill == "") {
+        //        alert('Level Keahlian Tidak Boleh Kosong');
+        //        $('#idSkillLevel').focus();
+        //    }
+            //    else {
             debugger;
-            var skill = $('#idSkillLevel').val();
-            if (skill == "") {
-                alert('Level Keahlian Tidak Boleh Kosong');
-                $('#idSkillLevel').focus();
-            }
-            else {
                 var vDatakeahlian = $('#idFrmEditKeahlian').serialize();
                 $.ajax({
                     url: '/Keahlian/EditSimpan',
@@ -108,7 +137,144 @@
                     }
                 });
             }
-        });
+    //});
+</script>
 
+<script>
+// (1) Defining our validator-functions
+//     for later use. They return
+//     "true", if the validation passes.
+const validators = {
+  // Checks the field for emptiness.
+    required: element => element.value.length > 0,
+
+  // Checks if there are no numbers
+  // in the field.
+  noNumbers: element => !element.value.match(/[0-9]/g),
+
+  // Checks if the value is shorter
+  // than 10 characters.
+  maxLength: element => element.value.length <= 10,
+
+  // Checks if the checkbox is checked.
+  mustBeChecked: element => element.checked
+};
+
+// (2) Check the contents of an input,
+//     get all validators, and mark
+//     the field in case of invalidity.
+function validateElement(element) {
+  resetValidation(element);
+
+  // Store all validators from the
+  // data-validate-attribute into
+  // an array.
+  const rules = element.dataset.validate.split(" ");
+
+  // For every validator on the
+  // field...
+  rules.forEach(rule => {
+    // ...find the corresponding
+    // validator-function from our
+    // object from #1 and call it
+    // with the element as parameter.
+    if (validators[rule](element)) {
+      // If the function returns true, all is fine.
+        debugger;
+        return;
+    } else {
+      // If it returns false, the
+      // validation failed.
+      // In that case, the
+      // markElementInvalid-function
+      // takes care of showing the
+      // error-message.
+      markElementInvalid(element, rule);
+    }
+  });
+}
+
+// (3) Adds classes to an element,
+//     so it appears invalid. Also
+//     it picks the correct feedback-
+//     message and sets it visible.
+function markElementInvalid(element, validatorName) {
+  element.classList.add("invalid");
+  element.setAttribute("aria-invalid", true);
+  const feedbackMessage = element.parentNode.querySelector(
+    `[data-validation-message=${validatorName}]`
+  );
+  feedbackMessage.classList.add("message-visible");
+  feedbackMessage.setAttribute("aria-hidden", false);
+}
+
+// (4) Removes all traces of
+//     validation from an element,
+//     like the error-messages and
+//     the styling.
+//     (Pretty much the opposite of #3)
+function resetValidation(element) {
+  element.classList.remove("invalid");
+  element.setAttribute("aria-invalid", false);
+  element.parentNode
+    .querySelectorAll("[data-validation-message]")
+    .forEach(e => {
+      e.classList.remove("message-visible");
+      e.setAttribute("aria-hidden", true);
     });
+}
+
+// (5) Store the form and its
+//     inputs in variables.
+const form = document.getElementById("idFrmEditKeahlian");
+const formElements = Array.from(form.elements);
+
+// (6) Every input gets an
+//     event-listener attached.
+formElements.forEach(formElement => {
+  // Do nothing if the element has
+  // no data-validate-attribute.
+  if (!formElement.dataset) return;
+  if (!formElement.dataset.validate) return;
+
+  // Attach the blur-event-listener
+  // to the element.
+  formElement.addEventListener("", () => {
+    // This means, validateElement will
+    // be called everytime the element
+    // loses focus.
+    validateElement(formElement);
+  });
+});
+
+// (7) We're doing what we did at #3,
+//     only on form-submit, and for
+//     every field.
+form.addEventListener("submit", event => {
+  // Let's assume, everything is fine.
+  let formIsValid = true;
+  form.classList.remove("invalid");
+
+  // We'll check every field in the form.
+  // (same as #3)
+  formElements.forEach(formElement => {
+    if (!formElement.dataset) return;
+    if (!formElement.dataset.validate) return;
+    validateElement(formElement);
+  });
+
+  // If there are any "invalid"-classes
+  // after we checked all fields, the form
+  // is invalid...
+  formIsValid = form.querySelectorAll(".invalid").length === 0;
+
+  // ...and will not be submitted.
+  if (formIsValid === false) {
+    form.classList.add("invalid");
+    event.preventDefault();
+  } else {
+      debugger;
+      editkeahlian();
+  }
+});
 </script>

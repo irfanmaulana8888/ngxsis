@@ -5,7 +5,7 @@
 
 
 <div class="table-responsive" style="height:600px;">
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr style="border-bottom:3px solid blue;">
                 <td colspan="3">
@@ -102,6 +102,12 @@
                 debugger;
                 $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
                     debugger;
+
+                    if (d.skill_name == null) {
+                        debugger;
+                        d.skill_name = '-';
+                    }
+
                     vStrHtml = vStrHtml + '<tr class="birutext" style="border-bottom:2px solid blue;">' +
                             '<td>' + d.skill_name + '</td>' +
                             '<td>' + vDataSkill[d.skill_level_id] + '</td>' +

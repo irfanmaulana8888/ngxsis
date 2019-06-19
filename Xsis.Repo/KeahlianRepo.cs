@@ -19,6 +19,7 @@ namespace Xsis.Repo
                 result = (from t in db.Keahlian
                           where t.is_delete == false
                           select t).ToList();
+
                 //select new Keahlian { skill_name = t.skill_name, notes = t.notes, skill_level_id = t.skill_level_id }).ToList();
 
 

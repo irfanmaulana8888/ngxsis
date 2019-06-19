@@ -1,23 +1,48 @@
-﻿<form action="" method="post" id="idFrmSubmitPekerjaan">
+﻿<style type="text/css">
+    [data-validation-message] {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+        [data-validation-message].message-visible {
+            display: block;
+        }
+
+    .blueborder {
+        border-color: blue;
+    }
+
+        .blueborder.invalid {
+            border-color: red;
+        }
+</style>
+
+<form action="" method="post" id="idFrmSubmitPekerjaan">
     <table class="table">
         <tr>
             <td colspan="2">
                 <label>Nama Perusahaan/Instansi*</label>
-                <input type="text" name="company_name" class="form-control" style="border:2px solid blue;" id="idInpNamaPerusahaan" placeholder="Nama Perusahaan">
+                <input type="text" name="company_name" data-validate="required" class="form-control blueborder" id="idInpNamaPerusahaan" placeholder="Nama Perusahaan">
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Nama Perusahaan/Instansi Harus Diisi.
+                </small>
             </td>
             <td width="150">
                 <label>Kota</label>
-                <input type="text" name="city" class="form-control" style="border:2px solid blue;" id="idInpCity" placeholder="Kota">
+                <input type="text" name="city" class="form-control blueborder" id="idInpCity" placeholder="Kota">
             </td>
             <td width="150">
                 <label>Negara</label>
-                <input type="text" name="country" class="form-control" style="border:2px solid blue;" id="idInpCountry" placeholder="Negara">
+                <input type="text" name="country" class="form-control blueborder" id="idInpCountry" placeholder="Negara">
             </td>
         </tr>
         <tr>
             <td width="150">
                 <label>Waktu Masuk*</label>
-                <select class="form-control  inputbiru" name="join_month" style="border:2px solid blue;" id="idWaktuMasuk">
+                <select class="form-control  blueborder" name="join_month" data-validate="required" id="idWaktuMasuk">
                     <option value="">-Pilih Bulan-</option>
                     <option value="1">Januari</option>
                     <option value="2">Februari</option>
@@ -32,16 +57,26 @@
                     <option value="11">November</option>
                     <option value="12">Desember</option>
                 </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Bulan Masuk Harus Diisi.
+                </small>
             </td>
             <td width="150">
                 <label>&nbsp;</label>
-                <select class="form-control  inputbiru" name="join_year" style="border:2px solid blue;" id="idTahunMasuk">
+                <select class="form-control  blueborder" name="join_year" data-validate="required" id="idTahunMasuk">
                     <option value="">-Pilih Tahun-</option>
                 </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Tahun Masuk Harus Diisi.
+                </small>
             </td>
             <td>
                 <label>Waktu Keluar</label>
-                <select class="form-control  inputbiru" name="resign_month" style="border:2px solid blue;" id="idWaktuKeluar">
+                <select class="form-control  blueborder" name="resign_month" id="idWaktuKeluar">
                     <option value="">-Pilih Bulan-</option>
                     <option value="1">Januari</option>
                     <option value="2">Februari</option>
@@ -59,48 +94,58 @@
             </td>
             <td>
                 <label>&nbsp;</label>
-                <select class="form-control  inputbiru" name="resign_year" style="border:2px solid blue;" id="idTahunKeluar">
+                <select class="form-control  blueborder" name="resign_year" id="idTahunKeluar" data-validate="TahunValid">
                     <option value="">-Pilih Tahun-</option>
                 </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="TahunValid">
+                    Tahun Keluar Tidak Valid.
+                </small>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <label>Posisi Terakhir*</label>
-                <input type="text" name="last_position" class="form-control" style="border:2px solid blue;" id="idInpNamaPosisi" placeholder="Posisi Terakhir">
+                <input type="text" name="last_position" class="form-control blueborder" data-validate="required" id="idInpNamaPosisi" placeholder="Posisi Terakhir">
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Posisi Terakhir Harus Diisi.
+                </small>
             </td>
             <td colspan="2">
                 <label>Penghasilan Terakhir (IDR)</label>
-                <input type="text" name="income" class="form-control" style="border:2px solid blue;" id="idInpIncome" placeholder="Income">
+                <input type="text" name="income" class="form-control blueborder" id="idInpIncome" placeholder="Income">
             </td>
         </tr>
         <tr>
             <td colspan="4">
-                <input type="checkbox" name="is_it_related" id="myCheckBox" style="border:2px solid blue;" value=true> <label>IT Related ?</label>
+                <input type="checkbox" name="is_it_related" id="myCheckBox" class="blueborder" value=true> <label>IT Related ?</label>
             </td>
         </tr>
         <tr>
             <td colspan="4">
                 <label>Keterangan Singkat Mengenai Pekerjaan</label>
-                <textarea class="form-control" id="idKeterangan" name="about_job" style="border:2px solid blue;" rows="3"></textarea>
+                <textarea class="form-control blueborder" id="idKeterangan" name="about_job" rows="3"></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="4">
                 <label>Alasan Keluar</label>
-                <textarea class="form-control" id="idExit" name="exit_reason" style="border:2px solid blue;" rows="2"></textarea>
+                <textarea class="form-control blueborder" id="idExit" name="exit_reason" rows="2"></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="4">
                 <label>Catatan</label>
-                <textarea class="form-control" id="idCatatan" name="notes" style="border:2px solid blue;" rows="3"></textarea>
+                <textarea class="form-control blueborder" id="idCatatan" name="notes" rows="3"></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="4" align="right">
                 <button type="button" class="btn orenwoy" id="idBtnCancelPekerjaan">&nbsp;Batal&nbsp;</button>
-                <button type="button" class="btn biruwoy" id="idBtnSubmitPekerjaan">Simpan</button>
+                <button type="submit" class="btn biruwoy" id="idBtnSubmitPekerjaan">Simpan</button>
             </td>
         </tr>
     </table>
@@ -143,29 +188,9 @@
         location.reload();
     });
 
-    $('#idBtnSubmitPekerjaan').click(function () {
-        debugger;
-        var company = $('#idInpNamaPerusahaan').val();
-        var bulan = $('#idWaktuMasuk').val();
-        var tahun = $('#idTahunMasuk').val();
-        var posisi = $('#idInpNamaPosisi').val();
-        if (company == "") {
-            alert('Nama Perusahaan Tidak Boleh Kosong');
-            $('#idInpNamaPerusahaan').focus();
-        }
-        else if (bulan == "") {
-            alert('Waktu Masuk Bulan Tidak Boleh Kosong');
-            $('#idWaktuMasuk').focus();
-        }
-        else if (tahun == "") {
-            alert('Waktu Masuk Tahun Tidak Boleh Kosong');
-            $('#idTahunMasuk').focus();
-        }
-        else if (posisi == "") {
-            alert('Posisi Terakhir Tidak Boleh Kosong');
-            $('#idInpNamaPosisi').focus();
-        }
-        else {
+    function simpanpekerjaan(){
+    //$('#idBtnSubmitPekerjaan').click(function () {
+    //    debugger;
             var vDatapekerjaan = $('#idFrmSubmitPekerjaan').serialize();
             $.ajax({
                 url: '/Pekerjaan/Save',
@@ -187,5 +212,150 @@
                 }
             });
         }
+    //});
+</script>
+
+<script>
+// (1) Defining our validator-functions
+//     for later use. They return
+//     "true", if the validation passes.
+    var num1 = document.getElementById("idTahunMasuk").value;
+    var num2 = document.getElementById("idTahunKeluar").value;
+
+    const validators = {
+  // Checks the field for emptiness.
+    required: element => element.value.length > 0,
+
+  // Checks if there are no numbers
+  // in the field.
+  noNumbers: element => !element.value.match(/[0-9]/g),
+
+  // Checks if the value is shorter
+  // than 10 characters.
+  maxLength: element => element.value.length <= 10,
+  
+  TahunValid: element => document.getElementById("idTahunMasuk").value <= document.getElementById("idTahunKeluar").value,
+
+  // Checks if the checkbox is checked.
+  mustBeChecked: element => element.checked
+};
+
+// (2) Check the contents of an input,
+//     get all validators, and mark
+//     the field in case of invalidity.
+function validateElement(element) {
+  resetValidation(element);
+
+  // Store all validators from the
+  // data-validate-attribute into
+  // an array.
+  const rules = element.dataset.validate.split(" ");
+
+  // For every validator on the
+  // field...
+  rules.forEach(rule => {
+    // ...find the corresponding
+    // validator-function from our
+    // object from #1 and call it
+    // with the element as parameter.
+    if (validators[rule](element)) {
+      // If the function returns true, all is fine.
+        debugger;
+        return;
+    } else {
+      // If it returns false, the
+      // validation failed.
+      // In that case, the
+      // markElementInvalid-function
+      // takes care of showing the
+      // error-message.
+      markElementInvalid(element, rule);
+    }
+  });
+}
+
+// (3) Adds classes to an element,
+//     so it appears invalid. Also
+//     it picks the correct feedback-
+//     message and sets it visible.
+function markElementInvalid(element, validatorName) {
+  element.classList.add("invalid");
+  element.setAttribute("aria-invalid", true);
+  const feedbackMessage = element.parentNode.querySelector(
+    `[data-validation-message=${validatorName}]`
+  );
+  feedbackMessage.classList.add("message-visible");
+  feedbackMessage.setAttribute("aria-hidden", false);
+}
+
+// (4) Removes all traces of
+//     validation from an element,
+//     like the error-messages and
+//     the styling.
+//     (Pretty much the opposite of #3)
+function resetValidation(element) {
+  element.classList.remove("invalid");
+  element.setAttribute("aria-invalid", false);
+  element.parentNode
+    .querySelectorAll("[data-validation-message]")
+    .forEach(e => {
+      e.classList.remove("message-visible");
+      e.setAttribute("aria-hidden", true);
     });
+}
+
+// (5) Store the form and its
+//     inputs in variables.
+const form = document.getElementById("idFrmSubmitPekerjaan");
+const formElements = Array.from(form.elements);
+
+// (6) Every input gets an
+//     event-listener attached.
+formElements.forEach(formElement => {
+  // Do nothing if the element has
+  // no data-validate-attribute.
+  if (!formElement.dataset) return;
+  if (!formElement.dataset.validate) return;
+
+  // Attach the blur-event-listener
+  // to the element.
+  formElement.addEventListener("", () => {
+    // This means, validateElement will
+    // be called everytime the element
+    // loses focus.
+    validateElement(formElement);
+  });
+});
+
+// (7) We're doing what we did at #3,
+//     only on form-submit, and for
+//     every field.
+form.addEventListener("submit", event => {
+  // Let's assume, everything is fine.
+  let formIsValid = true;
+  form.classList.remove("invalid");
+  debugger;
+  // We'll check every field in the form.
+  // (same as #3)
+  formElements.forEach(formElement => {
+    if (!formElement.dataset) return;
+    if (!formElement.dataset.validate) return;
+    validateElement(formElement);
+  });
+
+  // If there are any "invalid"-classes
+  // after we checked all fields, the form
+  // is invalid...
+  formIsValid = form.querySelectorAll(".invalid").length === 0;
+
+  // ...and will not be submitted.
+  if (formIsValid === false) {
+    form.classList.add("invalid");
+    event.preventDefault();
+  }
+  else {
+      debugger;
+      simpanpekerjaan();
+  }
+});
 </script>
