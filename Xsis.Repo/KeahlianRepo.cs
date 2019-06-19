@@ -4,30 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xsis.Model;
+using Xsis.ViewModel;
 
 namespace Xsis.Repo
 {
     public class KeahlianRepo
     {
-        public static List<Keahlian> GetAll()
+        //public static List<Keahlian> GetAll()
+        //{
+        //    List<Keahlian> result = new List<Keahlian>();
+        //    using (var db = new DataContext())
+        //    {
+        //        //result = db.Keahlian.ToList();
+
+        //        result = (from t in db.Keahlian
+        //                  where t.is_delete == false
+        //                  select t).ToList();
+
+        //    }
+        //    return result;
+        //}
+
+        public static List<KeahlianViewModel> GetAll()
         {
-            List<Keahlian> result = new List<Keahlian>();
+            List<KeahlianViewModel> result = new List<KeahlianViewModel>();
             using (var db = new DataContext())
             {
-                //result = db.Keahlian.ToList();
-
-                result = (from t in db.Keahlian
-                          where t.is_delete == false
-                          select t).ToList();
-
-                //select new Keahlian { skill_name = t.skill_name, notes = t.notes, skill_level_id = t.skill_level_id }).ToList();
-
-
-                //result = (from item in db.Keahlian
-                //          where item.is_delete == false
-                //          select new Keahlian { item.skill_name }).ToList();
-                return result;
+                result = (from item in db.Keahlian
+                          join Skill_Level in db.Skill_Level on item.skill_level_id equals Skill_Level.id where item.is_delete == false
+                          select new KeahlianViewModel
+                          {
+                              id = item.id,
+                              skill_name = item.skill_name,
+                              name = Skill_Level.name
+                          }
+                          ).ToList();
             }
+            return result;
         }
 
         public static List<Skill_Level> GetSelect()

@@ -88,8 +88,6 @@
 
 
 <script>
-    var vDataSkill =
-          { 1:'Novice',2:'Beginner',3:'Competent',4:'Pro',5:'Expert' };
 
     $(document).ready(function () {
 
@@ -110,7 +108,7 @@
 
                     vStrHtml = vStrHtml + '<tr class="birutext" style="border-bottom:2px solid blue;">' +
                             '<td>' + d.skill_name + '</td>' +
-                            '<td>' + vDataSkill[d.skill_level_id] + '</td>' +
+                            '<td>' + d.name + '</td>' +
                             //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +
 
                             '<td class="dropdown">' +
