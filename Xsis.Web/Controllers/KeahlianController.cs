@@ -40,7 +40,6 @@ namespace Xsis.Web.Controllers
             {
                 return Json(new { Simpan = "Gagal" }, JsonRequestBehavior.AllowGet);
             }
-            return View();
         }
 
         public ActionResult Edit(int ID)

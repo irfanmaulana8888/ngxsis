@@ -364,7 +364,6 @@ form.addEventListener("submit", event => {
               debugger;
               alert('Tahun Keluar Tidak Valid');
               document.getElementById("idTahunKeluar").focus();
-              document.getElementById("idTahunKeluar").classList.add("invalid");
               event.preventDefault();
           }
           else if ($('#idTahunKeluar').val() == $('#idTahunMasuk').val()) {
