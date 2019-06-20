@@ -21,7 +21,7 @@
     </table>
 </div>
 
-<div class="modal fade" id="idMdlCreatePekerjaan" tabindex="-1" role="dialog">
+<div class="modal fade" id="idMdlCreatePekerjaan" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog tengahwoy" role="document">
         <div class="modal-content lebarwoy">
             <div class="modal-header  birubg">
@@ -43,7 +43,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="idMdlEditPekerjaan" tabindex="-1" role="dialog">
+<div class="modal fade" id="idMdlEditPekerjaan" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog tengahwoy" role="document">
         <div class="modal-content lebarwoy">
             <div class="modal-header birubg">
@@ -64,7 +64,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="idMdlHapusPekerjaan" tabindex="-1" role="dialog">
+<div class="modal fade" id="idMdlHapusPekerjaan" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog tengahpls" role="document">
         <div class="modal-content lebarpls">
             <div class="modal-header merahbg">
@@ -191,9 +191,7 @@
                     debugger;
                     $('#idBodyCreatePekerjaan').empty();
                     $('#idBodyCreatePekerjaan').append(mdl);
-
                     $('#idMdlCreatePekerjaan').modal('show');
-
                     debugger;
                 },
                 error: function (mdl) {
