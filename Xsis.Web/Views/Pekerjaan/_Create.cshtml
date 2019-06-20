@@ -99,14 +99,14 @@
             </td>
             <td>
                 <label>&nbsp;</label>
-                <select class="form-control  blueborder" name="resign_year" id="idTahunKeluar" data-validate="TahunValid">
+                <select class="form-control  blueborder" name="resign_year" id="idTahunKeluar" @*data-validate="TahunValid"*@>
                     <option value="">-Pilih Tahun-</option>
                 </select>
-                <small role="alert"
+                @*<small role="alert"
                        aria-hidden="true"
                        data-validation-message="TahunValid">
                     Tahun Keluar Tidak Valid.
-                </small>
+                </small>*@
             </td>
         </tr>
         <tr>
@@ -237,7 +237,7 @@
   // than 10 characters.
   maxLength: element => element.value.length <= 10,
   
-  TahunValid: element => document.getElementById("idTahunMasuk").value <= document.getElementById("idTahunKeluar").value,
+  //TahunValid: element => document.getElementById("idTahunMasuk").value <= document.getElementById("idTahunKeluar").value,
 
   //BulanValid: element => (parseInt(document.getElementById("idTahunMasuk").value) == parseInt(document.getElementById("idTahunKeluar").value) && parseInt(document.getElementById("idWaktuMasuk").value) <= parseInt(document.getElementById("idWaktuKeluar").value)),
   // Checks if the checkbox is checked.
