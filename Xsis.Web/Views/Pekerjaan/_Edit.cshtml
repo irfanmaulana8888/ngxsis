@@ -356,8 +356,43 @@ form.addEventListener("submit", event => {
     event.preventDefault();
   }
   else {
-      debugger;
-      editpekerjaan();
+      if ($('#idTahunKeluar').val() != "") {
+          debugger;
+          if ($('#idTahunKeluar').val() < $('#idTahunMasuk').val()) {
+              debugger;
+              alert('Tahun Keluar Tidak Valid');
+              document.getElementById("idTahunKeluar").focus();
+              event.preventDefault();
+          }
+          else if ($('#idTahunKeluar').val() == $('#idTahunMasuk').val()) {
+              debugger;
+              if ($('#idWaktuKeluar').val() != "") {
+                  debugger;
+                  if ($('#idWaktuKeluar').val() < $('#idWaktuMasuk').val()) {
+                      debugger;
+                      alert('Bulan Keluar Tidak Valid');
+                      event.preventDefault();
+                  }
+                  else {
+                      event.currentTarget.submit();
+                      debugger;
+                      editpekerjaan();
+                  }
+              }
+              else {
+                  debugger;
+                  editpekerjaan();
+              }
+          }
+          else if ($('#idTahunKeluar').val() > $('#idTahunMasuk').val()) {
+              debugger;
+              editpekerjaan();
+          }
+      }
+      else {
+          debugger;
+          editpekerjaan();
+      }
   }
 });
 </script>
