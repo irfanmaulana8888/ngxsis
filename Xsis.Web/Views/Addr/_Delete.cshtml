@@ -1,0 +1,55 @@
+﻿<table class="table-responsive">
+    <tr>
+        <td>
+            <input type="hidden" name="id" id="idget" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="glyphicon glyphicon-trash" style="font-size:70px;"></span>
+        </td>
+        <td align="center">
+            <label class="merahtext" style="font-size:17px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;Anda yakin ingin menghapus Pengguna <br />
+                <input type="text" readonly style="border:0px; width:400px; text-align:center; background-color:white; font-size:20px;" id="idLblNamaPengguna" />
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <br />
+        </td>
+    </tr>
+    <tr>
+        <td align="right" colspan="3">
+            <button type="button" class="btn orenwoy" id="idCancelPengguna">Tidak</button>
+            <button type="button" class="btn merahwoy" id="idBtnHapusPengguna">&nbsp;&nbsp;&nbsp;Ya&nbsp;&nbsp;&nbsp;</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+
+    $('#idCancelPengguna').click(function () {
+        debugger;
+        $('#idMdlHapusAddr').modal('hide');
+    });
+
+    $('#idBtnHapusPengguna').click(function () {
+        var vDataID = $('#idget').val();
+        debugger;
+            $.ajax({
+                url: '/Addr/Delete',
+                data: { ID: vDataID },
+                method: 'Post',
+                success: function (mdl) {
+                    alert('Berhasil Menghapus Data');
+                    location.reload();
+                    debugger;
+                },
+                error: function (mdl) {
+                    debugger;
+                }
+            });
+    });
+</script>

@@ -2,71 +2,165 @@
 @{
     ViewBag.Title = "Index";
 }
+<style type="text/css">
+    [data-validation-message] {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+        [data-validation-message].message-visible {
+            display: block;
+        }
+
+    .blueborder {
+        border-color: blue;
+    }
+
+        .blueborder.invalid {
+            border-color: red;
+        }
+</style>
+
 <div class="table-responsive" style="height:600px;">
     <br />
     <div class="autocomplete" style="width:445px;">
         <label style="background-color:darkblue; font-size:20px; border-radius:5px;">
             <span class="glyphicon glyphicon-search" style="color:white; padding-left:10px; padding-right:5px;"></span>
-            <input id="myInput" type="text" style="border-radius:4px; border:2px solid blue; padding:6px 12px; width:400px;" placeholder="Search" />
+            <input id="myInput" type="text" style="border-top-right-radius:4px; border-bottom-right-radius:4px; border:1px solid blue; padding:6px 12px; width:400px;" placeholder="Search" />
             @*<input id="myInput" type="text" name="myCountry" placeholder="Country">*@
         </label>
     </div>
-    <table class="table">
-        <tr>
-            <td colspan="2" width="800px">
-                <label>Nama Lengkap</label>
-                <input type="text" class="form-control" readonly name="fullname" id="idFullName" style="border:2px solid blue;" />
-            </td>
-            <td></td>
-            <td rowspan="3">
-                <label style="border:1px solid blue; border-radius:5px;">
-                    <label style="color:white;font-size:18px; padding:5px; background-color:blue; width:300px;">Role*</label>
-                    <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 1</p>
-                    <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 2</p>
-                    <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 3</p>
-                    <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 4</p>
-                    <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 5</p>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" width="800px">
-                <label>Username*</label>
-                <input type="text" class="form-control" name="username" id="idUserName" style="border:2px solid blue;" />
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <label>Sandi*</label>
-                <input type="text" class="form-control" name="abpwd" id="idInpPw" style="border:2px solid blue;" />
-            </td>
-            <td>
-                <label>Ulangi Sandi*</label>
-                <input type="text" class="form-control" name="abpwd2" id="idInpPw2" style="border:2px solid blue;" />
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <button id="idHps" style="background-color:red; border:2px solid red; border-radius:5px;">
-                    <span class="glyphicon glyphicon-trash" style="font-size:20px; color:white; padding-top:5px; padding:5px; "></span>
-                </button>
-            </td>
-            <td colspan="3" align="right">
-                <button type="button" class="btn orenwoy" id="idBtnCancelPengguna">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>
-                <button type="button" class="btn biruwoy" id="idBtnSubmitPengguna">Simpan</button>
-            </td>
-        </tr>
-    </table>
+    <form action="" method="post" id="idFrmSubmitPengguna">
+        <table class="table">
+            <tr>
+                <td colspan="2" width="800px">
+                    <label>Nama Lengkap</label>
+                    <input type="text" class="form-control blueborder" readonly name="fullname" id="idFullName" />
+                </td>
+                <td></td>
+                <td rowspan="3">
+                    <label style="border:1px solid blue; border-radius:5px;">
+                        <label style="color:white;font-size:18px; padding:5px; background-color:blue; width:300px;">Role*</label>
+                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 1</p>
+                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 2</p>
+                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 3</p>
+                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 4</p>
+                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 5</p>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" width="800px">
+                    <label>Username*</label>
+                    <input type="text" class="form-control blueborder" name="username" data-validate="required emailValid" id="idUserName" />
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="required">
+                        Username Harus Diisi.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="emailValid">
+                        Email Tidak Valid.
+                    </small>
+                    <input type="text" id="idGet" />
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Sandi*</label>
+                    <input type="text" class="form-control blueborder" data-validate="required minSandi maxSandi" name="abpwd" id="idInpPw" />
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="required">
+                        Password Harus Diisi.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="minSandi">
+                        Sandi minimal 6 karakter.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="maxSandi">
+                        Sandi maksimal 16 karakter.
+                    </small>
+                </td>
+                <td>
+                    <label>Ulangi Sandi*</label>
+                    <input type="text" class="form-control blueborder" data-validate="required minSandi maxSandi matchSandi sandiSimbol" name="abpwd2" id="idInpPw2" />
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="required">
+                        Password Harus Diisi.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="minSandi">
+                        Sandi minimal 6 karakter.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="maxSandi">
+                        Sandi maksimal 16 karakter.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="matchSandi">
+                        Ulangi Sandi tidak cocok.
+                    </small>
+                    <small role="alert"
+                           aria-hidden="true"
+                           data-validation-message="sandiSimbol">
+                        Sandi minimal mengandung 1 simbol
+                    </small>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="idHps" style="background-color:red; border:2px solid red; border-radius:5px;">
+                        <span class="glyphicon glyphicon-trash" style="font-size:20px; color:white; padding-top:5px; padding:5px; "></span>
+                    </button>
+                </td>
+                <td colspan="3" align="right">
+                    <button type="button" class="btn orenwoy" id="idBtnCancelPengguna">&nbsp;&nbsp;Batal&nbsp;&nbsp;</button>
+                    <button type="submit" class="btn biruwoy" id="idBtnSubmitPengguna">Simpan</button>
+                </td>
+            </tr>
+        </table>
+        </form>
 </div>
 
+<div class="modal fade" id="idMdlHapusAddr" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog tengahpls" role="document">
+        <div class="modal-content lebarpls">
+            <div class="modal-header merahbg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Hapus Pengguna ?</h4>
+            </div>
+            <div class="modal-body" id="idBodyHapusAddr">
 
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script>
 
     $(document).ready(function () {
+
+        document.getElementById("idHps").disabled = true;
 
         var array_total = [];
 
@@ -83,187 +177,395 @@
         });
 
         autocomplete(document.getElementById("myInput"), array_total);
+    });
+
+    $('#idHps').click(function () {
+        var vDataID = parseInt($('#idGet').val());
+        debugger;
+        $.ajax({
+            url: '/Addr/DeleteCfr',
+            data: { ID: vDataID },
+            method: 'Post',
+            success: function (mdl) {
+                $('#idBodyHapusAddr').empty();
+                $('#idBodyHapusAddr').append(mdl);
+                $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
+                $('#idLblNamaPengguna').val($('#idFullName').val() +'?');
+                $('#idMdlHapusAddr').modal('show');
+                debugger;
+            },
+            error: function (mdl) {
+                debugger;
+            }
+        });
+    });
+
+    function autocomplete(inp, arr) {
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                debugger;
+                $.ajax({
+                    url: '/Pengguna/AmbilData',
+                    data: { ID: $('#myInput').val() },
+                    method: 'Get',
+                    success: function (mdl) {
+                        debugger;
+                        $('#idFullName').val(mdl.fullname);
+                        $('#idUserName').val(mdl.email);
+                        $('#idInpPw').val('');
+                        $('#idInpPw2').val('');
+                        $('#idGet').val('');
+                        document.getElementById("idInpPw").readOnly = false;
+                        document.getElementById("idInpPw2").readOnly = false;
+                        if ($('#idUserName').val != "") {
+                            debugger;
+                            $.ajax({
+                                url: '/Addr/Tampil',
+                                method: 'Get',
+                                success: function (mdl) {
+                                    debugger;
+                                    $.each(mdl, function (i, d) {
+                                        //mengecek email ada pada database addrbook
+                                        if (d.email == $('#idUserName').val()) {
+                                            debugger;
+                                            document.getElementById("idHps").disabled = false;
+
+                                            //mengambil data pada addr book apabila email ada
+                                            $.ajax({
+                                                url: '/Addr/AmbilData',
+                                                data: { Email: $('#idUserName').val() },
+                                                method: 'Get',
+                                                success: function (mdl) {
+                                                    debugger;
+                                                    $('#idGet').val(mdl.id);
+                                                    $('#idInpPw').val(mdl.abpwd);
+                                                    $('#idInpPw2').val(mdl.abpwd);
+                                                    document.getElementById("idInpPw").readOnly = true;
+                                                    document.getElementById("idInpPw2").readOnly = true;
+                                                    debugger;
+                                                }
+                                            });
+                                        } else {
+                                            document.getElementById("idHps").disabled = true;
+                                        }
+                                    });
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+                debugger;
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+
+</script>
+
+<script>
+// (1) Defining our validator-functions
+//     for later use. They return
+    //     "true", if the validation passes.
+    var b = @Html.Raw(@"/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/");
+    var d = @Html.Raw(@"/^[!@#$%^&*()]+/");
+
+    const validators = {
+        // Checks the field for emptiness.
+        required: element => element.value.length > 0,
+
+        emailValid: element => element.value.match(b),
+
+        minSandi: element => element.value.length > 5,
+
+        maxSandi: element => element.value.length <= 16,
+
+        matchSandi: element => document.getElementById("idInpPw").value == document.getElementById("idInpPw2").value,
+
+        sandiSimbol: element => element.value.match(d),
+  // Checks if there are no numbers
+  // in the field.
+  noNumbers: element => !element.value.match(/[0-9]/g),
+
+  // Checks if the value is shorter
+  // than 10 characters.
+  maxLength: element => element.value.length <= 10,
+
+  // Checks if the checkbox is checked.
+  mustBeChecked: element => element.checked
+};
+
+                // (2) Check the contents of an input,
+                //     get all validators, and mark
+                //     the field in case of invalidity.
+                function validateElement(element) {
+                    resetValidation(element);
+
+                    // Store all validators from the
+                    // data-validate-attribute into
+                    // an array.
+                    const rules = element.dataset.validate.split(" ");
+
+                    // For every validator on the
+                    // field...
+                    rules.forEach(rule => {
+                        // ...find the corresponding
+                        // validator-function from our
+                        // object from #1 and call it
+                        // with the element as parameter.
+                        if (validators[rule](element)) {
+                            // If the function returns true, all is fine.
+                            debugger;
+                            return;
+                        } else {
+                            // If it returns false, the
+                            // validation failed.
+                            // In that case, the
+                            // markElementInvalid-function
+                            // takes care of showing the
+                            // error-message.
+                            markElementInvalid(element, rule);
+                        }
+                    });
+                }
+
+                // (3) Adds classes to an element,
+                //     so it appears invalid. Also
+                //     it picks the correct feedback-
+                //     message and sets it visible.
+                function markElementInvalid(element, validatorName) {
+                element.classList.add("invalid");
+                element.setAttribute("aria-invalid", true);
+                const feedbackMessage = element.parentNode.querySelector(
+    `[data-validation-message=${validatorName}]`
+  );
+                feedbackMessage.classList.add("message-visible");
+                feedbackMessage.setAttribute("aria-hidden", false);
+            }
+
+            // (4) Removes all traces of
+            //     validation from an element,
+            //     like the error-messages and
+            //     the styling.
+            //     (Pretty much the opposite of #3)
+            function resetValidation(element) {
+                element.classList.remove("invalid");
+                element.setAttribute("aria-invalid", false);
+                element.parentNode
+                  .querySelectorAll("[data-validation-message]")
+                  .forEach(e => {
+                      e.classList.remove("message-visible");
+                      e.setAttribute("aria-hidden", true);
+                  });
+            }
+
+            // (5) Store the form and its
+            //     inputs in variables.
+            const form = document.getElementById("idFrmSubmitPengguna");
+            const formElements = Array.from(form.elements);
+
+            // (6) Every input gets an
+            //     event-listener attached.
+            formElements.forEach(formElement => {
+  // Do nothing if the element has
+  // no data-validate-attribute.
+  if (!formElement.dataset) return;
+  if (!formElement.dataset.validate) return;
+
+  // Attach the blur-event-listener
+  // to the element.
+  formElement.addEventListener("", () => {
+    // This means, validateElement will
+    // be called everytime the element
+    // loses focus.
+    validateElement(formElement);
+        });
+});
+
+// (7) We're doing what we did at #3,
+//     only on form-submit, and for
+//     every field.
+form.addEventListener("submit", event => {
+        // Let's assume, everything is fine.
+        let formIsValid = true;
+        form.classList.remove("invalid");
+
+        // We'll check every field in the form.
+        // (same as #3)
+        formElements.forEach(formElement => {
+            if (!formElement.dataset) return;
+            if (!formElement.dataset.validate) return;
+            validateElement(formElement);
         });
 
-function autocomplete(inp, arr) {
-    /*the autocomplete function takes two arguments,
-    the text field element and an array of possible autocompleted values:*/
-    var currentFocus;
-    /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function (e) {
-        var a, b, i, val = this.value;
-        /*close any already open lists of autocompleted values*/
-        closeAllLists();
-        if (!val) { return false; }
-        currentFocus = -1;
-        /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
-        this.parentNode.appendChild(a);
-        /*for each item in the array...*/
-        for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                /*create a DIV element for each matching element:*/
-                b = document.createElement("DIV");
-                /*make the matching letters bold:*/
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
-                /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                /*execute a function when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function (e) {
-                    /*insert the value for the autocomplete text field:*/
-                    inp.value = this.getElementsByTagName("input")[0].value;
-                    /*close the list of autocompleted values,
-                    (or any other open lists of autocompleted values:*/
-                    closeAllLists();
-                });
-                a.appendChild(b);
-            }
-        }
-    });
-    /*execute a function presses a key on the keyboard:*/
-    inp.addEventListener("keydown", function (e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-            /*If the arrow DOWN key is pressed,
-            increase the currentFocus variable:*/
-            currentFocus++;
-            /*and and make the current item more visible:*/
-            addActive(x);
-        } else if (e.keyCode == 38) { //up
-            /*If the arrow UP key is pressed,
-            decrease the currentFocus variable:*/
-            currentFocus--;
-            /*and and make the current item more visible:*/
-            addActive(x);
-        } else if (e.keyCode == 13) {
-            debugger;
-            $.ajax({
-                url: '/Pengguna/AmbilData',
-                data: { ID: $('#myInput').val() },
-                method: 'Get',
-                success: function (mdl) {
-                    debugger;
-                    $('#idFullName').val(mdl.fullname);
-                    $('#idUserName').val(mdl.email);
-                    document.getElementById("idHps").disabled = false;
+        // If there are any "invalid"-classes
+        // after we checked all fields, the form
+        // is invalid...
+        formIsValid = form.querySelectorAll(".invalid").length === 0;
 
-                    //if ($('#idUserName').val != "") {
-                    //    debugger;
-                    //    $.ajax({
-                    //        url: '/Addr/AmbilData',
-                    //        data: { ID: $('#idUserName').val() },
-                    //        method: 'Get',
-                    //        success: function (mdl) {
-                    //            debugger;
-                    //            document.getElementById("idHps").disabled = false;
-                    //        },
-                    //        error: function (mdl) {
-                    //            document.getElementById("idHps").disabled = true;
-                    //        }
-                    //    });
-                    //}
-                }
-            });
+        // ...and will not be submitted.
+        if (formIsValid === false) {
+            form.classList.add("invalid");
+    event.preventDefault();
+        } else {
             debugger;
-            /*If the ENTER key is pressed, prevent the form from being submitted,*/
-            e.preventDefault();
-            if (currentFocus > -1) {
-                /*and simulate a click on the "active" item:*/
-                if (x) x[currentFocus].click();
-            }
+            //simpanaddr();
         }
     });
-    function addActive(x) {
-        /*a function to classify an item as "active":*/
-        if (!x) return false;
-        /*start by removing the "active" class on all items:*/
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-        /*add class "autocomplete-active":*/
-        x[currentFocus].classList.add("autocomplete-active");
-    }
-    function removeActive(x) {
-        /*a function to remove the "active" class from all autocomplete items:*/
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    }
-    function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-        except the one passed as an argument:*/
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-    /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
-    });
-}
-
 </script>
 
 
 <style>
-    * { box-sizing: border-box; }
-body {
-  font: 16px Arial; 
-}
-.autocomplete {
-  /*the container must be positioned relative:*/
-  position: relative;
-  display: inline-block;
-}
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 100%;
-}
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-}
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  border-radius:5px;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-  border-bottom: 1px solid #d4d4d4; 
-}
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-radius:5px; 
-}
-.autocomplete-items div:hover {
-  /*when hovering an item:*/
-  background-color: #e9e9e9; 
-}
-.autocomplete-active {
-  /*when navigating through the items using the arrow keys:*/
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font: 16px Arial;
+    }
+
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+    }
+
+    input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            background-color: DodgerBlue;
+            color: #fff;
+        }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        border-radius: 5px;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
 </style>

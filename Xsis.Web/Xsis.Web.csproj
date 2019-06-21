@@ -164,6 +164,7 @@
     <Content Include="Views\Pekerjaan\_Delete.cshtml" />
     <Content Include="Views\Keahlian\_Delete.cshtml" />
     <Content Include="Views\Pengguna\Index.cshtml" />
+    <Content Include="Views\Addr\_Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -174,7 +175,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Addr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xsis.Model\Xsis.Model.csproj">
