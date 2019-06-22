@@ -25,5 +25,10 @@ namespace Xsis.Web.Controllers
             return Json(PenggunaRepo.GetByID(ID), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Check()
+        {
+            return Json(PenggunaRepo.GetCheck(), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

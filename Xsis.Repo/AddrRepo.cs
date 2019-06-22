@@ -30,6 +30,19 @@ namespace Xsis.Repo
             using (DataContext db = new DataContext())
             {
                 addr = db.AddrBook.Where(d => d.email == Email && d.is_delete == false).First();
+
+                string password = addr.abpwd;
+
+                System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+                System.Text.Decoder utf8Decode = encoder.GetDecoder();
+                byte[] todecode_byte = Convert.FromBase64String(password);
+                int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+                char[] decoded_char = new char[charCount];
+                utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+                string result = new String(decoded_char);
+
+                addr.abpwd = result;
+
                 return addr;
             }
         }

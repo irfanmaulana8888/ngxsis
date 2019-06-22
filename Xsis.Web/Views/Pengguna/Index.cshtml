@@ -40,14 +40,10 @@
                 </td>
                 <td></td>
                 <td rowspan="3">
-                    <label style="border:1px solid blue; border-radius:5px;">
-                        <label style="color:white;font-size:18px; padding:5px; background-color:blue; width:300px;">Role*</label>
-                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 1</p>
-                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 2</p>
-                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 3</p>
-                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 4</p>
-                        <p style="padding-left:10px;"><input type="checkbox" />&nbsp;Role 5</p>
+                    <label style="border:1px solid blue; border-radius:5px; height:220px;" id="idRole">
+                        <label style="color:white;font-size:18px; padding:5px; background-color:blue; width:305px;">Role*</label>
                     </label>
+                    <input type="text" id="simpan" name="id" />
                 </td>
             </tr>
             <tr>
@@ -109,7 +105,7 @@
             </tr>
             <tr>
                 <td>
-                    <button id="idHps" style="background-color:red; border:2px solid red; border-radius:5px;">
+                    <button type="button" id="idHps" style="background-color:red; border:2px solid red; border-radius:5px;">
                         <span class="glyphicon glyphicon-trash" style="font-size:20px; color:white; padding-top:5px; padding:5px; "></span>
                     </button>
                 </td>
@@ -146,8 +142,11 @@
 <script>
     var array_totals = [];
 
-    $(document).ready(function () {
+    $('.ads_Checkbox').click(function() {
+        debugger;
+    });
 
+    $(document).ready(function () {
         document.getElementById("idFullName").readOnly = false;
         document.getElementById("idHps").disabled = true;
 
@@ -180,6 +179,20 @@
             }
         });
 
+        var vCheck = '';
+
+        $.ajax({
+            url: '/Pengguna/Check',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    vCheck = vCheck +
+                    '<br />' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '<input class="ads_Checkbox" name="id" type="checkbox" value="' + d.id + '" />' +' &nbsp;' + d.name ;
+                });
+                $('#idRole').append(vCheck); //memasukan data yg sudah di jahit ke dalam body
+            }
+        });
     });
 
     $('#idHps').click(function () {
@@ -413,6 +426,7 @@
         matchSandi: element => document.getElementById("idInpPw").value == document.getElementById("idInpPw2").value,
 
         sandiValid: element => element.value.match(passw),
+
   // Checks if there are no numbers
   // in the field.
   noNumbers: element => !element.value.match(/[0-9]/g),
@@ -539,10 +553,24 @@ form.addEventListener("submit", event => {
     event.preventDefault();
         } else {
 
+            var checkbox= document.querySelector('input[name="id"]:checked');
+            if(!checkbox) {
+                debugger;
+                alert('Pilih Minimal 1 Role!');
+                event.preventDefault();
+            }else{
+                debugger;
+            var sel = $('input[type=checkbox]:checked').map(function(_, el) {
+                return $(el).val();
+            }).get();
+            $('#simpan').val(sel);
+            event.preventDefault();
+            }
+
             var email= $('#idUserName').val();
             var a = 0 ;
             debugger;
-            if ($('#idUserName').val() != "") {
+            if ($('#idUserName').val() != "" && $('#simpan').val() != "") {
                 debugger;
                 array_totals.some(function(item,index){
 
@@ -556,7 +584,8 @@ form.addEventListener("submit", event => {
                 });
             }
 
-            if (a != 1) {
+            if (a != 1 && $('#simpan').val() != "") {
+                debugger;
                 simpanaddr();
             }
         }

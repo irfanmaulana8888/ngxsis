@@ -39,5 +39,15 @@ namespace Xsis.Repo
             }
         }
 
+        public static List<Role> GetCheck()
+        {
+            List<Role> result = new List<Role>();
+            using (var db = new DataContext())
+            {
+                result = db.Role.ToList();
+                return result;
+            }
+        }
+
     }
 }
