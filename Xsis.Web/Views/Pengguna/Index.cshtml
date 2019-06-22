@@ -36,7 +36,7 @@
             <tr>
                 <td colspan="2" width="800px">
                     <label>Nama Lengkap</label>
-                    <input type="text" class="form-control blueborder" readonly name="fullname" id="idFullName" />
+                    <input type="text" class="form-control blueborder" name="fullname" id="idFullName" />
                 </td>
                 <td></td>
                 <td rowspan="3">
@@ -53,7 +53,7 @@
             <tr>
                 <td colspan="2" width="800px">
                     <label>Username*</label>
-                    <input type="text" class="form-control blueborder" name="username" data-validate="required emailValid" id="idUserName" />
+                    <input type="text" class="form-control blueborder" name="email" data-validate="required emailValid" id="idUserName" />
                     <small role="alert"
                            aria-hidden="true"
                            data-validation-message="required">
@@ -64,7 +64,7 @@
                            data-validation-message="emailValid">
                         Email Tidak Valid.
                     </small>
-                    <input type="text" id="idGet" />
+                    <input type="hidden" id="idGet" />
                 </td>
                 <td></td>
                 <td></td>
@@ -72,7 +72,7 @@
             <tr>
                 <td>
                     <label>Sandi*</label>
-                    <input type="text" class="form-control blueborder" data-validate="required minSandi maxSandi" name="abpwd" id="idInpPw" />
+                    <input type="password" class="form-control blueborder" data-validate="required sandiValid" name="abpwd" id="idInpPw" />
                     <small role="alert"
                            aria-hidden="true"
                            data-validation-message="required">
@@ -80,32 +80,18 @@
                     </small>
                     <small role="alert"
                            aria-hidden="true"
-                           data-validation-message="minSandi">
-                        Sandi minimal 6 karakter.
-                    </small>
-                    <small role="alert"
-                           aria-hidden="true"
-                           data-validation-message="maxSandi">
-                        Sandi maksimal 16 karakter.
+                           data-validation-message="sandiValid">
+                        Sandi Minimal 8 Karakter Maksimal 16 Karakter & <br />
+                        Memiliki 1 Huruf besar, kecil, angka dan simbol.
                     </small>
                 </td>
                 <td>
                     <label>Ulangi Sandi*</label>
-                    <input type="text" class="form-control blueborder" data-validate="required minSandi maxSandi matchSandi sandiSimbol" name="abpwd2" id="idInpPw2" />
+                    <input type="password" class="form-control blueborder" data-validate="required matchSandi sandiValid" name="abpwd2" id="idInpPw2" />
                     <small role="alert"
                            aria-hidden="true"
                            data-validation-message="required">
                         Password Harus Diisi.
-                    </small>
-                    <small role="alert"
-                           aria-hidden="true"
-                           data-validation-message="minSandi">
-                        Sandi minimal 6 karakter.
-                    </small>
-                    <small role="alert"
-                           aria-hidden="true"
-                           data-validation-message="maxSandi">
-                        Sandi maksimal 16 karakter.
                     </small>
                     <small role="alert"
                            aria-hidden="true"
@@ -114,8 +100,9 @@
                     </small>
                     <small role="alert"
                            aria-hidden="true"
-                           data-validation-message="sandiSimbol">
-                        Sandi minimal mengandung 1 simbol
+                           data-validation-message="sandiValid">
+                        Sandi Minimal 8 Karakter Maksimal 16 Karakter & <br />
+                        Memiliki 1 Huruf besar, kecil, angka dan simbol.
                     </small>
                 </td>
                 <td></td>
@@ -157,9 +144,11 @@
 </div><!-- /.modal -->
 
 <script>
+    var array_totals = [];
 
     $(document).ready(function () {
 
+        document.getElementById("idFullName").readOnly = false;
         document.getElementById("idHps").disabled = true;
 
         var array_total = [];
@@ -177,6 +166,20 @@
         });
 
         autocomplete(document.getElementById("myInput"), array_total);
+
+        $.ajax({
+            url: '/Addr/Tampil2',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+
+                $.each(mdl, function (i, d) {
+                    array_totals[i] = d.email;
+                    debugger;
+                });
+            }
+        });
+
     });
 
     $('#idHps').click(function () {
@@ -199,6 +202,28 @@
             }
         });
     });
+
+    function simpanaddr(){
+        var vDataaddr = $('#idFrmSubmitPengguna').serialize();
+        $.ajax({
+            url: '/Addr/Save',
+            data: vDataaddr,
+            method: 'Post',
+            success: function (mdl) {
+                debugger;
+                if (mdl.Simpan == "Berhasil") {
+                    alert("Data berhasil disimpan");
+                    //$('.modal').modal('hide');
+                    //$.modal.close();
+                    location.reload();
+                }
+                else {
+                    debugger;
+                    alert("Data gagal disimpan");
+                }
+            }
+        });
+    }
 
     function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,
@@ -258,6 +283,16 @@
                 addActive(x);
             } else if (e.keyCode == 13) {
                 debugger;
+                if ($('#myInput').val() == "") {
+                    debugger;
+                    document.getElementById("idUserName").readOnly = false;
+                    document.getElementById("idInpPw").readOnly = false;
+                    document.getElementById("idInpPw2").readOnly = false;
+                    $('#idFullName').val('');
+                    $('#idUserName').val('');
+                    $('#idInpPw').val('');
+                    $('#idInpPw2').val('');
+                }else{
                 $.ajax({
                     url: '/Pengguna/AmbilData',
                     data: { ID: $('#myInput').val() },
@@ -279,6 +314,7 @@
                                 success: function (mdl) {
                                     debugger;
                                     $.each(mdl, function (i, d) {
+                                        debugger;
                                         //mengecek email ada pada database addrbook
                                         if (d.email == $('#idUserName').val()) {
                                             debugger;
@@ -294,6 +330,7 @@
                                                     $('#idGet').val(mdl.id);
                                                     $('#idInpPw').val(mdl.abpwd);
                                                     $('#idInpPw2').val(mdl.abpwd);
+                                                    document.getElementById("idFullName").readOnly = true;
                                                     document.getElementById("idInpPw").readOnly = true;
                                                     document.getElementById("idInpPw2").readOnly = true;
                                                     debugger;
@@ -309,6 +346,7 @@
 
                     }
                 });
+                }
 
                 debugger;
                 /*If the ENTER key is pressed, prevent the form from being submitted,*/
@@ -358,7 +396,9 @@
 //     for later use. They return
     //     "true", if the validation passes.
     var b = @Html.Raw(@"/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/");
-    var d = @Html.Raw(@"/^[!@#$%^&*()]+/");
+    @*var passw = @Html.Raw(@"/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/"); //tanpa range minimal dan maksimal *@
+    var passw = @Html.Raw(@"/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/"); //dengan range minimal dan maksimal
+
 
     const validators = {
         // Checks the field for emptiness.
@@ -366,13 +406,13 @@
 
         emailValid: element => element.value.match(b),
 
-        minSandi: element => element.value.length > 5,
+        minSandi: element => element.value.length > 8,
 
         maxSandi: element => element.value.length <= 16,
 
         matchSandi: element => document.getElementById("idInpPw").value == document.getElementById("idInpPw2").value,
 
-        sandiSimbol: element => element.value.match(d),
+        sandiValid: element => element.value.match(passw),
   // Checks if there are no numbers
   // in the field.
   noNumbers: element => !element.value.match(/[0-9]/g),
@@ -498,8 +538,27 @@ form.addEventListener("submit", event => {
             form.classList.add("invalid");
     event.preventDefault();
         } else {
+
+            var email= $('#idUserName').val();
+            var a = 0 ;
             debugger;
-            //simpanaddr();
+            if ($('#idUserName').val() != "") {
+                debugger;
+                array_totals.some(function(item,index){
+
+                    if(item == email){
+                        debugger;
+                        a = 1;
+                        alert('Email Sudah Digunakan');
+                        event.preventDefault();
+                        return true;
+                    }
+                });
+            }
+
+            if (a != 1) {
+                simpanaddr();
+            }
         }
     });
 </script>

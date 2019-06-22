@@ -21,9 +21,28 @@ namespace Xsis.Web.Controllers
             return Json(AddrRepo.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Tampil2()
+        {
+            return Json(AddrRepo.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult AmbilData(string Email)
         {
             return Json(AddrRepo.GetByEmail(Email), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Save(AddrBook addr)
+        {
+            addr.created_by = Convert.ToInt64(Session["foo"]);
+            if (AddrRepo.Createaddr(addr))
+            {
+                return Json(new { Simpan = "Berhasil" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Simpan = "Gagal" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult DeleteCfr(int ID)

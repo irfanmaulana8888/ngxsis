@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Xsis.Model;
@@ -30,6 +31,37 @@ namespace Xsis.Repo
             {
                 addr = db.AddrBook.Where(d => d.email == Email && d.is_delete == false).First();
                 return addr;
+            }
+        }
+
+        public static Boolean Createaddr(AddrBook addrmdl)
+        {
+            try
+            {
+                AddrBook addr = new AddrBook();
+                using (DataContext db = new DataContext())
+                {
+                    addr.created_by = addrmdl.created_by;
+                    addr.created_on = DateTime.Now;
+                    addr.email = addrmdl.email;
+                    addr.abuid = addrmdl.email;
+
+                    string password = addrmdl.abpwd;
+
+                    byte[] encData_byte = new byte[password.Length];
+                    encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
+                    string encodedData = Convert.ToBase64String(encData_byte);
+
+                    addr.abpwd = encodedData;
+                    db.AddrBook.Add(addr);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
             }
         }
 
