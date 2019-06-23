@@ -6,14 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xsis.Model
+namespace Xsis.ViewModel
 {
-
-    [Table("x_riwayat_proyek")]
-    public class Riwayat_Proyek
+    public class PekerjaanViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //riwayat pekerjaan
         public long id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
@@ -34,6 +31,61 @@ namespace Xsis.Model
         public Nullable<DateTime> deleted_on { get; set; }
 
         public Boolean is_delete { get; set; }
+
+        public long biodata_id { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(100)]
+        public string company_name { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50)]
+        public string city { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50)]
+        public string country { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string join_year { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string join_month { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string resign_year { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string resign_month { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(100)]
+        public string last_position { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(20)]
+        public string income { get; set; }
+
+        public Nullable<Boolean> is_it_related { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(1000)]
+        public string about_job { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(500)]
+        public string exit_reason { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(5000)]
+        public string notes { get; set; }
+
+        //riwayat proyek
+        public long id_proyek { get; set; }
 
         public long riwayat_pekerjaan_id { get; set; }
 
@@ -64,6 +116,5 @@ namespace Xsis.Model
         [Column(TypeName = "Varchar")]
         [StringLength(1000)]
         public string description { get; set; }
-
     }
 }

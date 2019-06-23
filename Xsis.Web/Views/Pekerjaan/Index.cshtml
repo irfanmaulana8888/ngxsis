@@ -85,6 +85,27 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="idMdlCreateProyek" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog tengahwoy" role="document">
+        <div class="modal-content lebarwoy">
+            <div class="modal-header  birubg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Tambah Proyek <span style="padding-left:605px;"></span> <button class="ClBtnCloseProyek" style="background-color:transparent; border:none; overflow:hidden;"><span class="glyphicon glyphicon-remove"></span></button></h4>
+            </div>
+            <div class="modal-body" id="idBodyCreateProyek">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script>
     //var vDataSkill =
     //      { 1:'Novice',2:'Beginner',3:'Competent',4:'Pro',5:'Expert' };
@@ -130,7 +151,7 @@
                                 '<ul class="dropdown-menu">'+
                                 '<li><a class="UbahPekerjaan" dataID="'+ d.id +'" href="#">Ubah</a></li>'+
                                 '<li><a class="HapusPekerjaanCfr" dataID="' + d.id + '" href="#">Hapus</a></li>' +
-                                '<li><a class="TambahProject" dataID="' + d.id + '" href="#">Tambah Project</a></li>' +
+                                '<li><a class="TambahProyek" dataID="' + d.id + '" href="#">Tambah Project</a></li>' +
                                 '</ul>' +
                              '</td>' +
                             '</tr>';
@@ -152,6 +173,28 @@
                             $('#idBodyEditPekerjaan').append(mdl);
                             $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
                             $('#idMdlEditPekerjaan').modal('show');
+                            debugger;
+                        },
+                        error: function (mdl) {
+                            debugger;
+                        }
+                    });
+
+                });
+
+                $('.TambahProyek').click(function () {
+                    var vDataID = parseInt($(this).attr('dataID'));
+                    debugger;
+
+                    $.ajax({
+                        url: '/Proyek/Create',
+                        data: { ID: vDataID },
+                        method: 'Post',
+                        success: function (mdl) {
+                            $('#idBodyCreateProyek').empty();
+                            $('#idBodyCreateProyek').append(mdl);
+                            $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Create
+                            $('#idMdlCreateProyek').modal('show');
                             debugger;
                         },
                         error: function (mdl) {

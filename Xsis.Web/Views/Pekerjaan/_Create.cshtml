@@ -170,19 +170,6 @@
 
     });
 
-    $('#idTahunKeluar').click(function () {
-        if ($('#idTahunMasuk').val() == "" || $('#idWaktuMasuk').val() == "") {
-            alert('Silahkan Pilih Waktu Masuk');
-        }
-    });
-
-    $('#idWaktuKeluar').click(function () {
-        debugger;
-        if ($('#idTahunMasuk').val() == "" || $('#idWaktuMasuk').val() == "") {
-            alert('Silahkan Pilih Waktu Masuk');
-        }
-    });
-
     $('#idBtnCancelPekerjaan').click(function () {
         $('#idMdlCreatePekerjaan').close;
         location.reload();

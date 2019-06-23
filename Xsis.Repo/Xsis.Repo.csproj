@@ -55,6 +55,7 @@
     <Compile Include="PekerjaanRepo.cs" />
     <Compile Include="PenggunaRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProyekRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
