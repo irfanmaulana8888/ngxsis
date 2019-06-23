@@ -28,3 +28,5 @@ C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\bin\Debug\EntityFramewor
 C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\obj\Debug\Xsis.ViewModel.csprojResolveAssemblyReference.cache
 C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\obj\Debug\Xsis.ViewModel.dll
 C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\obj\Debug\Xsis.ViewModel.pdb
+C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\bin\Debug\Xsis.Model.dll
+C:\Users\ASUS\Desktop\MiniProject\ngxsis\Xsis.ViewModel\bin\Debug\Xsis.Model.pdb

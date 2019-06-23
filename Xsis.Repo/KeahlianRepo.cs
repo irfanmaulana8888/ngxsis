@@ -31,7 +31,9 @@ namespace Xsis.Repo
             using (var db = new DataContext())
             {
                 result = (from item in db.Keahlian
-                          join Skill_Level in db.Skill_Level on item.skill_level_id equals Skill_Level.id where item.is_delete == false
+                          join Skill_Level in db.Skill_Level on item.skill_level_id equals Skill_Level.id
+                          orderby item.id descending //membuat descending
+                          where item.is_delete == false
                           select new KeahlianViewModel
                           {
                               id = item.id,
