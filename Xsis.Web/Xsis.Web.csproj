@@ -167,6 +167,9 @@
     <Content Include="Views\Pengguna\Index.cshtml" />
     <Content Include="Views\Addr\_Delete.cshtml" />
     <Content Include="Views\Proyek\_Create.cshtml" />
+    <Content Include="Views\Proyek\Index.cshtml" />
+    <Content Include="Views\Proyek\_Edit.cshtml" />
+    <Content Include="Views\Proyek\_Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="table-responsive" style="height:600px;">
+    <table class="table table-striped">
+        <thead>
+            <tr style="border-bottom:3px solid blue;">
+                <td colspan="4">
+                    <h4 class="biru">Proyek</h4>
+                </td>
+            </tr>
+            <tr class="biru" style="border-bottom:3px solid blue;">
+                <td>NAMA PROYEK</td>
+                <td>POSISI PROYEK</td>
+                <td>RIWAYAT PEKERJAAN ID</td>
+                <td>#</td>
+            </tr>
+        </thead>
+        <tbody id="idTblBodyProyek"></tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="idMdlEditProyek" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog tengahwoy" role="document">
+        <div class="modal-content lebarwoy">
+            <div class="modal-header  birubg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Edit Proyek <span style="padding-left:630px;"></span> <button class="ClBtnCloseProyek" style="background-color:transparent; border:none; overflow:hidden;"><span class="glyphicon glyphicon-remove"></span></button></h4>
+            </div>
+            <div class="modal-body" id="idBodyEditProyek">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="idMdlHapusProyek" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog tengahpls" role="document">
+        <div class="modal-content lebarpls">
+            <div class="modal-header merahbg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Hapus Proyek ?</h4>
+            </div>
+            <div class="modal-body" id="idBodyHapusProyek">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<script>
+    $(document).ready(function () {
+        var vProyek = '';
+
+        $.ajax({
+            url: '/Proyek/Tampil',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    debugger;
+
+                    vProyek = vProyek + '<tr class="birutext" style="border-bottom:2px solid blue;">' +
+                            '<td>' + d.project_name + '</td>' +
+                            '<td>' + d.project_position + '</td>' +
+                            '<td>' + d.id + '</td>' +
+                            //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +
+
+                            '<td class="dropdown">' +
+                                '<button class="btn birubg dropdown-toggle" type="button" data-toggle="dropdown">More &nbsp;' +
+                                '<span class="caret"></span>' +
+                                '</button>' +
+                                '<ul class="dropdown-menu">' +
+                                '<li><a class="UbahProyek" dataID="' + d.id_proyek + '" href="#">Ubah</a></li>' +
+                                '<li><a class="HapusProyekCfr" dataID="' + d.id_proyek + '" href="#">Hapus</a></li>' +
+                                '</ul>' +
+                             '</td>' +
+                            '</tr>';
+
+                });
+
+                $('#idTblBodyProyek').append(vProyek); //memasukan data yg sudah di jahit ke dalam body
+
+                $('.UbahProyek').click(function () {
+                    var vDataID = parseInt($(this).attr('dataID'));
+                    debugger;
+
+                    $.ajax({
+                        url: '/Proyek/Edit',
+                        data: { ID: vDataID },
+                        method: 'Post',
+                        success: function (mdl) {
+                            $('#idBodyEditProyek').empty();
+                            $('#idBodyEditProyek').append(mdl);
+                            $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
+                            $('#idMdlEditProyek').modal('show');
+                            debugger;
+                        },
+                        error: function (mdl) {
+                            debugger;
+                        }
+                    });
+
+                });
+
+
+                $('.HapusProyekCfr').click(function () {
+                    var vDataID = parseInt($(this).attr('dataID'));
+                    debugger;
+                    $.ajax({
+                        url: '/Proyek/DeleteCfr',
+                        data: { ID: vDataID },
+                        method: 'Post',
+                        success: function (mdl) {
+                            $('#idBodyHapusProyek').empty();
+                            $('#idBodyHapusProyek').append(mdl);
+                            $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
+                            $('#idMdlHapusProyek').modal('show');
+                            debugger;
+                        },
+                        error: function (mdl) {
+                            debugger;
+                        }
+                    });
+                });
+
+            }
+
+        });
+
+    });
+
+    $('.ClBtnCloseProyek').click(function () {
+        $('#idMdlCreateProyek').close;
+        location.reload();
+    });
+
+</script>
