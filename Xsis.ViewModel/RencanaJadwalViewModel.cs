@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xsis.Model
+namespace Xsis.ViewModel
 {
-
-    [Table("x_rencana_jadwal")]
-    public class Rencana_Jadwal
+    public class RencanaJadwalViewModel
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
 
@@ -73,7 +71,6 @@ namespace Xsis.Model
         [StringLength(50)]
         public string status { get; set; }
 
-
-
+        public string biodata_id { get; set; }
     }
 }

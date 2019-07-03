@@ -25,11 +25,11 @@
 }
 </style>
 
-<form action="" method="post" id="idFrmSubmitKeahlian">
+<form action="" method="post" id="idFrmSubmitRJ">
     <table class="table">
         <tr>
             <td width="50%;" style="border:none;">
-                <input type="text" name="schedule_data" class="form-control blueborder" id="idInpTgl" placeholder="Tgl. Rencana Jadwal*">
+                <input type="text" name="schedule_date" class="form-control blueborder" id="idInpTgl" placeholder="Tgl. Rencana Jadwal*">
             </td>
             <td style="border:none;">
                 <select class="form-control blueborder" data-validate="required" name="time" id="idTime">
@@ -104,12 +104,13 @@
         <tr>
             <td>
                 <label id="idDataPelamar"></label>
+                <input type="text" name="biodata_id" id="idBiodata" />
             </td>
         </tr>
         <tr>
             <td colspan="2" align="right" style="border:none;">
-                <button type="button" class="btn orenwoy" id="idBtnCancelKeahlian">&nbsp;Batal&nbsp;</button>
-                <button type="submit" class="btn biruwoy" id="idBtnSubmitKeahlian">Simpan</button>
+                <button type="button" class="btn orenwoy" id="idBtnCancelRJ">&nbsp;Batal&nbsp;</button>
+                <button type="submit" class="btn biruwoy" id="idBtnSubmitRJ">Simpan</button>
             </td>
         </tr>
     </table>
@@ -132,14 +133,16 @@
         var vCheck = '';
 
         $.ajax({
+
             url: '/RencanaJadwal/Check',
             method: 'Get',
             success: function (mdl) {
                 debugger;
                 $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
                     vCheck = vCheck +
-                    '<br />' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '<input class="ads_Checkbox" name="id" type="checkbox" value="' + d.id + '" />' + ' &nbsp;' + d.fullname;
+                    '<br />' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '<input class="ads_Checkbox" name="bio_id" type="checkbox" value="' + d.id + '" />' + ' &nbsp;' + d.fullname;
                 });
+                $('#idDataPelamar').empty();
                 $('#idDataPelamar').append(vCheck); //memasukan data yg sudah di jahit ke dalam body
             }
         });
@@ -152,9 +155,49 @@
         if (!checkbox) {
             debugger;
             document.getElementById("idSent").disabled = true;
+            $('#idSent').val('');
         } else {
             document.getElementById("idSent").disabled = false;
         }
+    });
+
+
+    $('#idBtnSubmitRJ').click(function () {
+
+        var checkbox = document.querySelector('input[name="bio_id"]:checked');
+        if (!checkbox) {
+            debugger;
+            alert('Pilih Minimal 1 Role!');
+            event.preventDefault();
+        } else {
+            debugger;
+            var sel = $('input[name="bio_id"]:checked').map(function (_, el) {
+                return $(el).val();
+            }).get();
+            $('#idBiodata').val(sel);
+        }
+        debugger;
+
+        var vDataRJ = $('#idFrmSubmitRJ').serialize();
+        $.ajax({
+            url: '/RencanaJadwal/Save',
+            data: vDataRJ,
+            method: 'Post',
+            success: function (mdl) {
+                debugger;
+                if (mdl.Simpan == "Berhasil") {
+                    alert("Data berhasil disimpan");
+                    //$('.modal').modal('hide');
+                    //$.modal.close();
+                    $('#idMdlCreateRJ').close;
+                    location.reload();
+                }
+                else {
+                    debugger;
+                    alert("Data gagal disimpan");
+                }
+            }
+        });
     });
 
 </script>
