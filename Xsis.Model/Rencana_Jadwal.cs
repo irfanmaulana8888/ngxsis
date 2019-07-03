@@ -14,22 +14,24 @@ namespace Xsis.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long rencana_jadwal_id { get; set; }
+        public long id { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
         public long created_by { get; set; }
 
         [Column(TypeName = "Date")]
+        [Required(AllowEmptyStrings = false)]
         public DateTime created_on { get; set; }
 
-        public long modified_by { get; set; }
+        public Nullable<long> modified_by { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime modified_on { get; set; }
+        public Nullable<DateTime> modified_on { get; set; }
 
-        public long deleted_by { get; set; }
+        public Nullable<long> deleted_by { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime deleted_on { get; set; }
+        public Nullable<DateTime> deleted_on { get; set; }
 
         public Boolean is_delete { get; set; }
 
@@ -38,17 +40,17 @@ namespace Xsis.Model
         public string schedule_code { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime shcedule_date { get; set; }
+        public Nullable<DateTime> shcedule_date { get; set; }
 
         [Column(TypeName = "Varchar")]
         [StringLength(10)]
         public string time { get; set; }
 
-        public long ro { get; set; }
+        public Nullable<long> ro { get; set; }
 
-        public long tro { get; set; }
+        public Nullable<long> tro { get; set; }
 
-        public long schedule_type_id { get; set; }
+        public Nullable<long> schedule_type_id { get; set; }
 
         [Column(TypeName = "Varchar")]
         [StringLength(100)]
@@ -62,10 +64,10 @@ namespace Xsis.Model
         [StringLength(1000)]
         public string notes { get; set; }
 
-        public Boolean is_automatic_mail { get; set; }
+        public Nullable<Boolean> is_automatic_mail { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime sent_date { get; set; }
+        public Nullable<DateTime> sent_date { get; set; }
 
         [Column(TypeName = "Varchar")]
         [StringLength(50)]

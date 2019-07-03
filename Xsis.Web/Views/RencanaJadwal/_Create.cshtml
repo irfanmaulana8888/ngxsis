@@ -1,0 +1,160 @@
+﻿<style type="text/css">
+    [data-validation-message] {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+        [data-validation-message].message-visible {
+            display: block;
+        }
+
+    .blueborder {
+        border-color: blue;
+    }
+
+        .blueborder.invalid {
+            border-color: red;
+        }
+
+        /* Style the input container */
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+</style>
+
+<form action="" method="post" id="idFrmSubmitKeahlian">
+    <table class="table">
+        <tr>
+            <td width="50%;" style="border:none;">
+                <input type="text" name="schedule_data" class="form-control blueborder" id="idInpTgl" placeholder="Tgl. Rencana Jadwal*">
+            </td>
+            <td style="border:none;">
+                <select class="form-control blueborder" data-validate="required" name="time" id="idTime">
+                    <option value="">Jam *</option>
+                    <option value="8">08.00</option>
+                    <option value="9">09.00</option>
+                </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Jam Harus Diisi.
+                </small>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:none;">
+                <select class="form-control blueborder" name="ro" id="idRo">
+                    <option value="">RO</option>
+                    <option value="1">Irfan</option>
+                    <option value="2">Maulana</option>
+                </select>
+            </td>
+            <td style="border:none;">
+                <select class="form-control blueborder" name="tro" id="idTro">
+                    <option value="">TRO</option>
+                    <option value="1">Titi</option>
+                    <option value="2">Jaidai</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:none;">
+                <select class="form-control blueborder" data-validate="required" name="schedule_type_id" id="idJadwal">
+                    <option value="">Jenis Jadwal *</option>
+                    <option value="8">Interview</option>
+                    <option value="9">Ttd Kontrak</option>
+                </select>
+                <small role="alert"
+                       aria-hidden="true"
+                       data-validation-message="required">
+                    Jenis Jadwal Harus Diisi.
+                </small>
+            </td>
+            <td style="border:none;">
+                <input type="text" name="location" class="form-control blueborder" id="idInpLocation" placeholder="Lokasi">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border:none;">
+                <label>Catatan</label>
+                <textarea class="form-control blueborder" id="txtarea" name="notes" rows="3" placeholder="Catatan"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border:none;">
+                <input type="checkbox" name="is_automatic_mail" id="idAutomatic" class="blueborder" value=true> <label>Kirim Undangan Otomatis</label>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:none;">
+                <div class="input-container">
+                    <input type="text" name="sent_date" class="form-control blueborder" disabled style="border-top-right-radius:0px; border-bottom-right-radius:0px; border-right:none;" id="idSent" placeholder="Tgl. Dikirim">
+                    <span class="input-group-addon blueborder" style="background-color: white; padding-right:25px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom:2px solid blue; border-top:none;" colspan="2">
+                <label>Pelamar</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label id="idDataPelamar"></label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right" style="border:none;">
+                <button type="button" class="btn orenwoy" id="idBtnCancelKeahlian">&nbsp;Batal&nbsp;</button>
+                <button type="submit" class="btn biruwoy" id="idBtnSubmitKeahlian">Simpan</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#idInpTgl").datepicker({ //datepicker
+            minDate: 0,
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#idSent").datepicker({ //datepicker
+            minDate: 0,
+            dateFormat: "yy-mm-dd"
+        });
+
+        var vCheck = '';
+
+        $.ajax({
+            url: '/RencanaJadwal/Check',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    vCheck = vCheck +
+                    '<br />' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '<input class="ads_Checkbox" name="id" type="checkbox" value="' + d.id + '" />' + ' &nbsp;' + d.fullname;
+                });
+                $('#idDataPelamar').append(vCheck); //memasukan data yg sudah di jahit ke dalam body
+            }
+        });
+
+    });
+
+    $('#idAutomatic').click(function () {
+        debugger;
+        var checkbox = document.querySelector('input[name="is_automatic_mail"]:checked');
+        if (!checkbox) {
+            debugger;
+            document.getElementById("idSent").disabled = true;
+        } else {
+            document.getElementById("idSent").disabled = false;
+        }
+    });
+
+</script>
