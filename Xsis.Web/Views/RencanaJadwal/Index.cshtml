@@ -4,74 +4,93 @@
 }
 
 <style type="text/css">
-
     .blueborder {
         border-color: blue;
     }
-
 </style>
 
-<div class="table-responsive" style="height:600px;">
-    <table class="table table-striped">
-        <thead>
-            <tr style="border-bottom:2px solid blue;">
-                <td colspan="3">
-                    <label style="font-size:17px;">Rencana Jadwal</label>
-                </td>
-                <td align="right">
-                    <button type="button" id="idBtnSort"class="btn-link"><span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-                    <button type="button" id="idBtnRow"class="btn-link"><span class="glyphicon glyphicon-align-justify"></span></button>
-                    <button type="button" id="idBtnCreateRJ" class="btn-link"><span class="glyphicon glyphicon-plus-sign"></span></button>
-                </td>
-            </tr>
-            <tr>
-                <td width="250px;">
-                    <div class="input-group">
-                        <input type="text" name="expired_test" class="form-control blueborder"  id="idtglSls" style="border-right: none;" placeholder="Dari">
-                        <span class="input-group-addon blueborder" style="background-color: transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i></span>
-                    </div>
-                </td>
-                <td width="250px;">
-                    <div class="input-group">
-                        <input type="text" name="expired_test" class="form-control blueborder" id="idtglSls" style="border-right: none;" placeholder="Sampai">
-                        <span class="input-group-addon blueborder" style="background-color: transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i></span>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" style="background-color:#000080; border:2px solid #000080; width:70px; height:32px; color:white; font-weight:bold;">Cari</button>
-                    <button type="button" style="background-color:#000080; border:2px solid #000080; width:70px; height:32px; color:white; font-weight:bold;">Reset</button>
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-        </thead>
-        <tbody id="idTblBodyRJ"></tbody>
-    </table>
-
-    <div class="modal fade" id="idMdlCreateRJ" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" role="document" style="width:800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
-                    <h4 class="modal-title">Buat Rencana Jadwal <span style="padding-left:550px;"></span> @*<button class="ClBtnCloseRJ" style="background-color:transparent; border:none; overflow:hidden;"><span class="glyphicon glyphicon-remove"></span></button>*@</h4>
-                </div>
-                <div class="modal-body" id="idBodyCreateRJ">
-
-
-
-                    @*<p>One fine body&hellip;</p>*@
-                </div>
-                @*<div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>*@
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <div class="table-responsive" style="height:600px;">
+        <form action="" method="post" id="idFrmCariRJ">
+            <table class="table table-striped">
+                <thead>
+                    <tr style="border-bottom:2px solid blue;">
+                        <td colspan="3">
+                            <label style="font-size:17px;">Rencana Jadwal</label>
+                        </td>
+                        <td align="right">
+                            <button type="button" id="idBtnSort" class="btn-link"><span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
+                            <button type="button" id="idBtnRow" class="btn-link"><span class="glyphicon glyphicon-align-justify"></span></button>
+                            <button type="button" id="idBtnCreateRJ" class="btn-link"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="250px;">
+                            <div class="input-group">
+                                <input type="text" name="rj_dari" class="form-control blueborder" id="idTgldari"  style="border-right: none;" placeholder="Dari" required 
+                                    oninvalid="this.setCustomValidity('Data tidak boleh kosong')" onchange="this.setCustomValidity('')" >
+                                <span class="input-group-addon blueborder" style="background-color:  transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td width="250px;">
+                            <div class="input-group">
+                                <input type="text" name="rj_sampai" class="form-control blueborder" id="idTglsampai" style="border-right: none;" placeholder="Sampai" required
+                                    oninvalid="this.setCustomValidity('Data tidak boleh kosong')" onchange="this.setCustomValidity('')">
+                                <span class="input-group-addon blueborder" style="background-color: transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i></span>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" id="cariDataid" style="background-color:#000080; border:2px solid #000080; width:70px; height:32px; color:white; font-weight:bold;">Cari</button>
+                            <button type="reset" style="background-color:#000080; border:2px solid #000080; width:70px; height:32px; color:white; font-weight:bold;">Reset</button>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="idTblBodyRJ"></tbody>
+            </table>
+        </form>
 </div>
 
+
+<div class="modal fade" id="idMdlCreateRJ" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Buat Rencana Jadwal <span style="padding-left:550px;"></span> @*<button class="ClBtnCloseRJ" style="background-color:transparent; border:none; overflow:hidden;"><span class="glyphicon glyphicon-remove"></span></button>*@</h4>
+            </div>
+            <div class="modal-body" id="idBodyCreateRJ">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script>
+    $(document).ready(function () {
+
+        $("#idTgldari").datepicker({ //datepicker
+            minDate: -10,
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#idTglsampai").datepicker({ //datepicker
+            minDate: -10,
+            dateFormat: "yy-mm-dd"
+        });
+
+    });
+
+
     $('#idBtnCreateRJ').click(function () {
         $.ajax({
             url: '/RencanaJadwal/Create',
@@ -91,5 +110,90 @@
         });
 
     });
-</script>
 
+    var vStrHtml = '';
+
+    $('#cariDataid').click(function () {
+
+        if ($('#idTgldari').val() == "") {
+            alert('Filter Tanggal Dari Tidak boleh kosong')
+        }
+        else if ($('#idTglsampai').val() == "") {
+            alert('Filter Tanggal Sampai Tidak boleh kosong')
+        }
+        else if ($('#idTgldari').val() > $('#idTglsampai').val()) {
+            alert('Filter Tanggal Sampai Tidak boleh lebih kecil dari tanggal Dari')
+        }
+        else {
+            //simpan data
+            var a = $('#idTgldari').val();
+            var b = a.toString();
+            var c = $('#idTglsampai').val();
+            var d = c.toString();
+            $.ajax({
+                url: '/RencanaJadwal/Cari',
+                data: { Dari: b, Sampai: d },
+                method: 'Get',
+                success: function (mdl) {
+                    debugger;
+
+                    if (mdl.length != 0) {
+
+                        $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                            debugger;
+
+                            //function convert(date) {
+                            //    // var date = new Date(str),
+                            //    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+                            //    day = ("0" + date.getDate()).slice(-2);
+                            //    return [day, mnth ,date.getFullYear()].join("/");
+                            //}
+                            //var testDate = convert(new Date(d.schedule_date.substr(6, 13) - 0));
+
+                            a = new Date(parseInt(d.schedule_date.substr(6)));
+                            vtanggal = (a.getDate() < 10 ? '0' : '') + a.getDate();
+                            vbulan = a.getMonth() + 1;
+                            var vMonthList = { 1: 'Januari', 2: 'Februari', 3: 'Maret', 4: 'April', 5: 'Mei', 6: 'Juni', 7: 'Juli', 8: 'Agustus', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Desember' };
+                            vtahun = a.getFullYear();
+                            vDataDob = vtanggal + " " + vMonthList[vbulan] + " " + vtahun;
+
+                            vStrHtml = vStrHtml + '<tr class="birutext">' +
+                                    '<td>' + d.id + '</td>' +
+                                    '<td>' + vDataDob + ',  ' + d.time + '</td>' +
+                                    '<td>' +
+                                    'RO:' + d.ro +
+                                    '<br />' + 'TRO:' + d.tro +
+                                    '<br />' + 'Lokasi:' + d.location +
+                                    '<br />' + 'Mode:' + d.is_automatic_mail +
+                                    '<br />' + 'Jenis Jadwal:' + d.schedule_type_id +
+                                    '</td>' +
+                                    //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +
+
+                                    '<td class="dropdown">' +
+                                        '<button class="btn birubg dropdown-toggle" type="button" data-toggle="dropdown">More &nbsp;' +
+                                        '<span class="caret"></span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu">' +
+                                        '<li><a class="UbahKeahlian" dataID="' + d.id + '" href="#">Ubah</a></li>' +
+                                        '<li><a class="HapusKeahlianCfr" dataID="' + d.id + '" href="#">Hapus</a></li>' +
+                                        '</ul>' +
+                                     '</td>' +
+                                    '</tr>';
+
+                        });
+
+                        debugger;
+                        $('#idTblBodyRJ').append(vStrHtml); //memasukan data yg sudah di jahit ke dalam body
+                        debugger;
+
+                    } else {
+                        alert('Data Tidak Ditemukan');
+                    }
+
+                }, error: function (mdl) {
+                    debugger;
+                }
+            });
+        }
+    });
+</script>

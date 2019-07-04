@@ -105,12 +105,13 @@
             <td>
                 <label id="idDataPelamar"></label>
                 <input type="text" name="biodata_id" id="idBiodata" />
+                <input type="text" name="id_auto" id="IdRencanaLast" />
             </td>
         </tr>
         <tr>
             <td colspan="2" align="right" style="border:none;">
                 <button type="button" class="btn orenwoy" id="idBtnCancelRJ">&nbsp;Batal&nbsp;</button>
-                <button type="submit" class="btn biruwoy" id="idBtnSubmitRJ">Simpan</button>
+                <button type="submit" class="btn biruwoy" id="idBtnSubmitRJ">Simpan & Kirim</button>
             </td>
         </tr>
     </table>
@@ -119,6 +120,22 @@
 <script>
 
     $(document).ready(function () {
+
+        $.ajax({
+            url: '/RencanaJadwal/AmbilID',
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                var nilai = mdl;
+                if (nilai != null) {
+                    $('#IdRencanaLast').val(mdl + 1);
+                }
+                else {
+                    $('#IdRencanaLast').val(1);
+                }
+                debugger;
+                }
+        });
 
         $("#idInpTgl").datepicker({ //datepicker
             minDate: 0,
@@ -156,11 +173,17 @@
             debugger;
             document.getElementById("idSent").disabled = true;
             $('#idSent').val('');
+            $('#idBtnSubmitRJ').text("Simpan & Kirim");
         } else {
             document.getElementById("idSent").disabled = false;
+            $('#idBtnSubmitRJ').text("Simpan");
         }
     });
 
+    $('#idBtnCancelRJ').click(function () {
+        $('#idMdlCreateRJ').close;
+        location.reload();
+    });
 
     $('#idBtnSubmitRJ').click(function () {
 
@@ -175,29 +198,28 @@
                 return $(el).val();
             }).get();
             $('#idBiodata').val(sel);
-        }
-        debugger;
+            debugger;
 
-        var vDataRJ = $('#idFrmSubmitRJ').serialize();
-        $.ajax({
-            url: '/RencanaJadwal/Save',
-            data: vDataRJ,
-            method: 'Post',
-            success: function (mdl) {
-                debugger;
-                if (mdl.Simpan == "Berhasil") {
-                    alert("Data berhasil disimpan");
-                    //$('.modal').modal('hide');
-                    //$.modal.close();
-                    $('#idMdlCreateRJ').close;
-                    location.reload();
-                }
-                else {
+            var vDataRJ = $('#idFrmSubmitRJ').serialize();
+            $.ajax({
+                url: '/RencanaJadwal/Save',
+                data: vDataRJ,
+                method: 'Post',
+                success: function (mdl) {
                     debugger;
-                    alert("Data gagal disimpan");
+                    if (mdl.Simpan == "Berhasil") {
+                        alert("Data berhasil disimpan");
+                        //$('.modal').modal('hide');
+                        //$.modal.close();
+                        $('#idMdlCreateRJ').close;
+                        location.reload();
+                    }
+                    else {
+                        debugger;
+                        alert("Data gagal disimpan");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
-
 </script>

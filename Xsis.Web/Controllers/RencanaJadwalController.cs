@@ -17,6 +17,11 @@ namespace Xsis.Web.Controllers
             return View();
         }
 
+        public ActionResult AmbilID()
+        {
+            return Json(RencanaJadwalRepo.GetLast(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Create()
         {
             return PartialView("_Create");
@@ -38,6 +43,11 @@ namespace Xsis.Web.Controllers
             {
                 return Json(new { Simpan = "Gagal" }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult Cari(DateTime Dari, DateTime Sampai)
+        {
+            return Json(RencanaJadwalRepo.GetData(Dari,Sampai), JsonRequestBehavior.AllowGet);
         }
 
     }
