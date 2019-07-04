@@ -26,7 +26,7 @@
                     <tr>
                         <td width="250px;">
                             <div class="input-group">
-                                <input type="text" name="rj_dari" class="form-control blueborder" id="idTgldari"  style="border-right: none;" placeholder="Dari" required 
+                                <input type="text" name="rj_dari" class="form-control blueborder" autocomplete="off" id="idTgldari"  style="border-right: none;" placeholder="Dari" required 
                                     oninvalid="this.setCustomValidity('Data tidak boleh kosong')" onchange="this.setCustomValidity('')" >
                                 <span class="input-group-addon blueborder" style="background-color:  transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i>
                                 </span>
@@ -34,7 +34,7 @@
                         </td>
                         <td width="250px;">
                             <div class="input-group">
-                                <input type="text" name="rj_sampai" class="form-control blueborder" id="idTglsampai" style="border-right: none;" placeholder="Sampai" required
+                                <input type="text" name="rj_sampai" class="form-control blueborder" autocomplete="off" id="idTglsampai" style="border-right: none;" placeholder="Sampai" required
                                     oninvalid="this.setCustomValidity('Data tidak boleh kosong')" onchange="this.setCustomValidity('')">
                                 <span class="input-group-addon blueborder" style="background-color: transparent; padding: 6px 7px;"><i class="glyphicon glyphicon-calendar" style="font-size: 18px; color:#000080;"></i></span>
                             </div>
@@ -111,7 +111,6 @@
 
     });
 
-    var vStrHtml = '';
 
     $('#cariDataid').click(function () {
 
@@ -125,6 +124,8 @@
             alert('Filter Tanggal Sampai Tidak boleh lebih kecil dari tanggal Dari')
         }
         else {
+            vStrHtml = '';
+            $('#idTblBodyRJ').empty();
             //simpan data
             var a = $('#idTgldari').val();
             var b = a.toString();
@@ -157,26 +158,51 @@
                             vtahun = a.getFullYear();
                             vDataDob = vtanggal + " " + vMonthList[vbulan] + " " + vtahun;
 
+                            var RO = { 1: 'Irfan', 2: 'Maulana' };
+                            var TRO = { 1: 'Titi', 2: 'Jaidai' };
+
+                            if (d.is_automatic_mail == true) {
+                                debugger;
+                                d.is_automatic_mail = 'Otomatis';
+                            }
+                            else {
+                                d.is_automatic_mail = 'Manual';
+                            }
+
+                            if (d.ro == null) {
+                                d.ro = '-';
+                            }
+
+                            if (d.tro == null) {
+                                d.tro = '-';
+                            }
+
+                            if (d.location == null) {
+                                d.location = '-';
+                            }
+
                             vStrHtml = vStrHtml + '<tr class="birutext">' +
-                                    '<td>' + d.id + '</td>' +
+                                    '<td>' + d.schedule_code + '</td>' +
                                     '<td>' + vDataDob + ',  ' + d.time + '</td>' +
                                     '<td>' +
-                                    'RO:' + d.ro +
-                                    '<br />' + 'TRO:' + d.tro +
-                                    '<br />' + 'Lokasi:' + d.location +
-                                    '<br />' + 'Mode:' + d.is_automatic_mail +
-                                    '<br />' + 'Jenis Jadwal:' + d.schedule_type_id +
+                                    'RO : ' + RO[d.ro] +
+                                    '<br />' + 'TRO : ' + TRO[d.tro] +
+                                    '<br />' + 'Lokasi : ' + d.location +
+                                    '<br />' + 'Mode : ' + d.is_automatic_mail +
+                                    '<br />' + 'Jenis Jadwal : ' + d.name_schedule +
                                     '</td>' +
                                     //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +
 
-                                    '<td class="dropdown">' +
-                                        '<button class="btn birubg dropdown-toggle" type="button" data-toggle="dropdown">More &nbsp;' +
-                                        '<span class="caret"></span>' +
+                                    '<td align="right">' +
+                                        '<button type="button" class="btn-link" style="color:black;">' +
+                                        '<span style="font-size:18px;" class="glyphicon glyphicon-search"></span>' +
                                         '</button>' +
-                                        '<ul class="dropdown-menu">' +
-                                        '<li><a class="UbahKeahlian" dataID="' + d.id + '" href="#">Ubah</a></li>' +
-                                        '<li><a class="HapusKeahlianCfr" dataID="' + d.id + '" href="#">Hapus</a></li>' +
-                                        '</ul>' +
+                                        '<button type="button" class="btn-link" style="color:black;">' +
+                                        '<span style="font-size:18px;" class="glyphicon glyphicon-edit"></span>' +
+                                        '</button>' +
+                                        '<button type="button" class="btn-link" style="color:black;">' +
+                                        '<span style="font-size:18px;" class="glyphicon glyphicon-trash"></span>' +
+                                        '</button>' +
                                      '</td>' +
                                     '</tr>';
 

@@ -50,5 +50,9 @@ namespace Xsis.Web.Controllers
             return Json(RencanaJadwalRepo.GetData(Dari,Sampai), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Select()
+        {
+            return Json(RencanaJadwalRepo.GetSelect(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

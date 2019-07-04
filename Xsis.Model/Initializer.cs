@@ -49,6 +49,17 @@ namespace Xsis.Model
             {
                 context.Role.Add(item);
             }
+
+            List<Schedule_Type> schedule = new List<Schedule_Type>();
+            schedule.Add(new Schedule_Type { created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false, name = "Interview", description = "Nanyain Orang" });
+            schedule.Add(new Schedule_Type { created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false, name = "Test", description = "Nguji Orang" });
+            schedule.Add(new Schedule_Type { created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false, name = "Bootcamp", description = "Ngajarin Orang" });
+            base.Seed(context);
+
+            foreach (var item in schedule)
+            {
+                context.Schedule_Type.Add(item);
+            }
         }
 
     }

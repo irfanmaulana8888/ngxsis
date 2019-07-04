@@ -74,5 +74,7 @@ namespace Xsis.ViewModel
         public string biodata_id { get; set; }
 
         public long id_auto { get; set; }
+
+        public string name_schedule { get; set; }
     }
 }
