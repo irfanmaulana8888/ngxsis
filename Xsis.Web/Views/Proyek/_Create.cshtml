@@ -125,16 +125,19 @@
         }
         $('#idTahunMulai').append(vOption);
 
+        validasi();
     });
 
     $('.ClBtnCloseProyek').click(function () {
-        $('#idMdlCreateProyek').close;
-        location.reload();
+        //$('#idMdlCreateProyek').close;
+        //location.reload();
+        $('#idMdlCreateProyek').modal('hide');
     });
 
     $('#idBtnCancelProyek').click(function () {
-        $('#idMdlCreateProyek').close;
-        location.reload();
+        //$('#idMdlCreateProyek').close;
+        //location.reload();
+        $('#idMdlCreateProyek').modal('hide');
     });
 
     function simpanproyek() {
@@ -162,140 +165,142 @@
 </script>
 
 <script>
-// (1) Defining our validator-functions
-//     for later use. They return
-//     "true", if the validation passes.
-const validators = {
-  // Checks the field for emptiness.
-    required: element => element.value.length > 0,
+    function validasi() {
+        // (1) Defining our validator-functions
+        //     for later use. They return
+        //     "true", if the validation passes.
+        const validators = {
+            // Checks the field for emptiness.
+            required: element => element.value.length > 0,
 
-  // Checks if there are no numbers
-  // in the field.
-  noNumbers: element => !element.value.match(/[0-9]/g),
+            // Checks if there are no numbers
+            // in the field.
+            noNumbers: element => !element.value.match(/[0-9]/g),
 
-  // Checks if the value is shorter
-  // than 10 characters.
-  maxLength: element => element.value.length <= 10,
+            // Checks if the value is shorter
+            // than 10 characters.
+            maxLength: element => element.value.length <= 10,
 
-  // Checks if the checkbox is checked.
-  mustBeChecked: element => element.checked
-};
+            // Checks if the checkbox is checked.
+            mustBeChecked: element => element.checked
+        };
 
-// (2) Check the contents of an input,
-//     get all validators, and mark
-//     the field in case of invalidity.
-function validateElement(element) {
-  resetValidation(element);
+        // (2) Check the contents of an input,
+        //     get all validators, and mark
+        //     the field in case of invalidity.
+        function validateElement(element) {
+            resetValidation(element);
 
-  // Store all validators from the
-  // data-validate-attribute into
-  // an array.
-  const rules = element.dataset.validate.split(" ");
+            // Store all validators from the
+            // data-validate-attribute into
+            // an array.
+            const rules = element.dataset.validate.split(" ");
 
-  // For every validator on the
-  // field...
-  rules.forEach(rule => {
-    // ...find the corresponding
-    // validator-function from our
-    // object from #1 and call it
-    // with the element as parameter.
-    if (validators[rule](element)) {
-      // If the function returns true, all is fine.
-        debugger;
-        return;
-    } else {
-      // If it returns false, the
-      // validation failed.
-      // In that case, the
-      // markElementInvalid-function
-      // takes care of showing the
-      // error-message.
-      markElementInvalid(element, rule);
+            // For every validator on the
+            // field...
+            rules.forEach(rule => {
+                // ...find the corresponding
+                // validator-function from our
+                // object from #1 and call it
+                // with the element as parameter.
+                if (validators[rule](element)) {
+                    // If the function returns true, all is fine.
+                    debugger;
+                    return;
+                } else {
+                    // If it returns false, the
+                    // validation failed.
+                    // In that case, the
+                    // markElementInvalid-function
+                    // takes care of showing the
+                    // error-message.
+                    markElementInvalid(element, rule);
+                }
+            });
+        }
+
+        // (3) Adds classes to an element,
+        //     so it appears invalid. Also
+        //     it picks the correct feedback-
+        //     message and sets it visible.
+        function markElementInvalid(element, validatorName) {
+            element.classList.add("invalid");
+            element.setAttribute("aria-invalid", true);
+            const feedbackMessage = element.parentNode.querySelector(
+              `[data-validation-message=${validatorName}]`
+            );
+            feedbackMessage.classList.add("message-visible");
+            feedbackMessage.setAttribute("aria-hidden", false);
+        }
+
+        // (4) Removes all traces of
+        //     validation from an element,
+        //     like the error-messages and
+        //     the styling.
+        //     (Pretty much the opposite of #3)
+        function resetValidation(element) {
+            element.classList.remove("invalid");
+            element.setAttribute("aria-invalid", false);
+            element.parentNode
+              .querySelectorAll("[data-validation-message]")
+              .forEach(e => {
+                  e.classList.remove("message-visible");
+                  e.setAttribute("aria-hidden", true);
+              });
+        }
+
+        // (5) Store the form and its
+        //     inputs in variables.
+        const form = document.getElementById("idFrmSubmitProyek");
+        const formElements = Array.from(form.elements);
+
+        // (6) Every input gets an
+        //     event-listener attached.
+        formElements.forEach(formElement => {
+            // Do nothing if the element has
+            // no data-validate-attribute.
+            if (!formElement.dataset) return;
+            if (!formElement.dataset.validate) return;
+
+            // Attach the blur-event-listener
+            // to the element.
+            formElement.addEventListener("", () => {
+                // This means, validateElement will
+                // be called everytime the element
+                // loses focus.
+                validateElement(formElement);
+            });
+        });
+
+        // (7) We're doing what we did at #3,
+        //     only on form-submit, and for
+        //     every field.
+        form.addEventListener("submit", event => {
+            // Let's assume, everything is fine.
+            let formIsValid = true;
+            form.classList.remove("invalid");
+
+            // We'll check every field in the form.
+            // (same as #3)
+            formElements.forEach(formElement => {
+                if (!formElement.dataset) return;
+                if (!formElement.dataset.validate) return;
+                validateElement(formElement);
+            });
+
+            // If there are any "invalid"-classes
+            // after we checked all fields, the form
+            // is invalid...
+            formIsValid = form.querySelectorAll(".invalid").length === 0;
+
+            // ...and will not be submitted.
+            if (formIsValid === false) {
+                form.classList.add("invalid");
+                event.preventDefault();
+            } else {
+                debugger;
+                simpanproyek();
+            }
+        });
     }
-  });
-}
-
-// (3) Adds classes to an element,
-//     so it appears invalid. Also
-//     it picks the correct feedback-
-//     message and sets it visible.
-function markElementInvalid(element, validatorName) {
-  element.classList.add("invalid");
-  element.setAttribute("aria-invalid", true);
-  const feedbackMessage = element.parentNode.querySelector(
-    `[data-validation-message=${validatorName}]`
-  );
-  feedbackMessage.classList.add("message-visible");
-  feedbackMessage.setAttribute("aria-hidden", false);
-}
-
-// (4) Removes all traces of
-//     validation from an element,
-//     like the error-messages and
-//     the styling.
-//     (Pretty much the opposite of #3)
-function resetValidation(element) {
-  element.classList.remove("invalid");
-  element.setAttribute("aria-invalid", false);
-  element.parentNode
-    .querySelectorAll("[data-validation-message]")
-    .forEach(e => {
-      e.classList.remove("message-visible");
-      e.setAttribute("aria-hidden", true);
-    });
-}
-
-// (5) Store the form and its
-//     inputs in variables.
-const form = document.getElementById("idFrmSubmitProyek");
-const formElements = Array.from(form.elements);
-
-// (6) Every input gets an
-//     event-listener attached.
-formElements.forEach(formElement => {
-  // Do nothing if the element has
-  // no data-validate-attribute.
-  if (!formElement.dataset) return;
-  if (!formElement.dataset.validate) return;
-
-  // Attach the blur-event-listener
-  // to the element.
-  formElement.addEventListener("", () => {
-    // This means, validateElement will
-    // be called everytime the element
-    // loses focus.
-    validateElement(formElement);
-  });
-});
-
-// (7) We're doing what we did at #3,
-//     only on form-submit, and for
-//     every field.
-form.addEventListener("submit", event => {
-  // Let's assume, everything is fine.
-  let formIsValid = true;
-  form.classList.remove("invalid");
-
-  // We'll check every field in the form.
-  // (same as #3)
-  formElements.forEach(formElement => {
-    if (!formElement.dataset) return;
-    if (!formElement.dataset.validate) return;
-    validateElement(formElement);
-  });
-
-  // If there are any "invalid"-classes
-  // after we checked all fields, the form
-  // is invalid...
-  formIsValid = form.querySelectorAll(".invalid").length === 0;
-
-  // ...and will not be submitted.
-  if (formIsValid === false) {
-    form.classList.add("invalid");
-    event.preventDefault();
-  } else {
-      debugger;
-      simpanproyek();
-  }
-});
 </script>
