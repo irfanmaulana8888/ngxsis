@@ -17,15 +17,15 @@
             border-color: red;
         }
 
-        /* Style the input container */
-.input-container {
-  display: flex;
-  width: 100%;
-  margin-bottom: 15px;
-}
+    /* Style the input container */
+    .input-container {
+        display: flex;
+        width: 100%;
+        margin-bottom: 15px;
+    }
 </style>
 
-<form action="" method="post" id="idFrmSubmitRJ">
+<form action="" method="post" id="idFrmEditRJ">
     <table class="table">
         <tr>
             <td width="50%;" style="border:none;">
@@ -76,7 +76,7 @@
                 <select class="form-control blueborder" data-validate="required" name="schedule_type_id" id="idJadwal">
                     <option value="">Jenis Jadwal *</option>
                     @*<option value="8">Interview</option>
-                    <option value="9">Ttd Kontrak</option>*@
+                        <option value="9">Ttd Kontrak</option>*@
                 </select>
                 <small role="alert"
                        aria-hidden="true"
@@ -116,13 +116,13 @@
             <td>
                 <label id="idDataPelamar"></label>
                 <input type="text" name="biodata_id" id="idBiodata" />
-                <input type="text" name="id_auto" id="IdRencanaLast" />
+                <input type="text" name="id" id="idget" />
             </td>
         </tr>
         <tr>
             <td colspan="2" align="right" style="border:none;">
                 <button type="button" class="btn orenwoy" id="idBtnCancelRJ">&nbsp;Batal&nbsp;</button>
-                <button type="submit" class="btn biruwoy" id="idBtnSubmitRJ">Simpan & Kirim</button>
+                <button type="submit" class="btn biruwoy" id="idBtnEditRJ">Simpan & Kirim</button>
             </td>
         </tr>
     </table>
@@ -131,22 +131,6 @@
 <script>
 
     $(document).ready(function () {
-
-        $.ajax({
-            url: '/RencanaJadwal/AmbilID',
-            method: 'Get',
-            success: function (mdl) {
-                debugger;
-                var nilai = mdl;
-                if (nilai != null) {
-                    $('#IdRencanaLast').val(mdl + 1);
-                }
-                else {
-                    $('#IdRencanaLast').val(1);
-                }
-                debugger;
-                }
-        });
 
         $("#idInpTgl").datepicker({ //datepicker
             minDate: 0,
@@ -177,7 +161,6 @@
 
 
         var vSelect = '';
-
         $.ajax({
             url: '/RencanaJadwal/Select',
             method: 'Get',
@@ -190,10 +173,68 @@
                             '</option>';
                 });
                 $('#idJadwal').append(vSelect); //memasukan data yg sudah di jahit ke dalam body
+                masukin();
+            }
+        });
+
+
+        var cks = '';
+        $.ajax({
+            url: '/RencanaJadwal/AmbilData2',
+            data: { ID: $('#idget').val() },
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    cks = d.biodata_id;
+                    $(":checkbox[value=" + cks + "]").prop("checked", "true");
+                });
+                debugger;
             }
         });
 
     });
+
+    function masukin() {
+        $.ajax({
+            url: '/RencanaJadwal/AmbilData',
+            data: { ID: $('#idget').val() },
+            method: 'Get',
+            success: function (mdl) {
+
+                function convert(date) {
+                    // var date = new Date(str),
+                    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+                    day = ("0" + date.getDate()).slice(-2);
+                    return [date.getFullYear(), mnth, day].join("-");
+                }
+                if (mdl.sent_date != null) {
+                    var sentDate = convert(new Date(mdl.sent_date.substr(6, 13) - 0));
+                }
+                var testDate = convert(new Date(mdl.schedule_date.substr(6, 13) - 0));
+
+                debugger;
+                $('#idInpTgl').val(testDate);
+                $('#idTime').val(mdl.time).selected;
+                $('#idRo').val(mdl.ro).selected;
+                $('#idTro').val(mdl.tro).selected;
+                $('#idJadwal').val(mdl.schedule_type_id).selected;
+                $('#idInpLocation').val(mdl.location);
+                $('#txtarea').val(mdl.notes);
+                var cek = mdl.is_automatic_mail;
+                $('#idAutomatic').attr('checked', cek);
+
+                if (cek == true) {
+                    $('#idSent').val(sentDate);
+                    document.getElementById("idSent").disabled = false;
+                    $('#idBtnEditRJ').text("Simpan");
+                }
+                else{
+                    $('#idSent').val(sentDate);
+                }
+            }
+        });
+    }
 
     $('#idAutomatic').click(function () {
         debugger;
@@ -202,10 +243,10 @@
             debugger;
             document.getElementById("idSent").disabled = true;
             $('#idSent').val('');
-            $('#idBtnSubmitRJ').text("Simpan & Kirim");
+            $('#idBtnEditRJ').text("Simpan & Kirim");
         } else {
             document.getElementById("idSent").disabled = false;
-            $('#idBtnSubmitRJ').text("Simpan");
+            $('#idBtnEditRJ').text("Simpan");
         }
     });
 
@@ -214,9 +255,7 @@
         location.reload();
     });
 
-    function simpanrencana(){
-
-    //$('#idBtnSubmitRJ').click(function () {
+    function editrencana() {
 
         var checkbox = document.querySelector('input[name="bio_id"]:checked');
         if (!checkbox) {
@@ -231,30 +270,30 @@
             $('#idBiodata').val(sel);
             debugger;
 
-            var vDataRJ = $('#idFrmSubmitRJ').serialize();
+            debugger;
+            var vDatarencana = $('#idFrmEditRJ').serialize();
             $.ajax({
-                url: '/RencanaJadwal/Save',
-                data: vDataRJ,
+                url: '/RencanaJadwal/EditSimpan',
+                data: vDatarencana,
                 method: 'Post',
                 success: function (mdl) {
-                    debugger;
-                    if (mdl.Simpan == "Berhasil") {
-                        alert("Data berhasil disimpan");
+                    if (mdl.EditSimpan == "Berhasil") {
+                        debugger;
+                        alert("Data berhasil diEdit");
                         //$('.modal').modal('hide');
                         //$.modal.close();
-                        $('#idMdlCreateRJ').close;
+                        $('#idMdlEditKeahlian').close;
                         location.reload();
+
                     }
                     else {
                         debugger;
-                        alert("Data gagal disimpan");
+                        alert("Data gagal diEdit");
                     }
                 }
             });
         }
     }
-    //)
-    ;
 </script>
 
 <script>
@@ -343,7 +382,7 @@ function resetValidation(element) {
 
 // (5) Store the form and its
 //     inputs in variables.
-const form = document.getElementById("idFrmSubmitRJ");
+const form = document.getElementById("idFrmEditRJ");
 const formElements = Array.from(form.elements);
 
 // (6) Every input gets an
@@ -398,7 +437,7 @@ form.addEventListener("submit", event => {
           event.preventDefault();
       } else {
           debugger;
-          simpanrencana();
+          editrencana();
       }
   }
 });

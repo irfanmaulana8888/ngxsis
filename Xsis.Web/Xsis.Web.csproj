@@ -173,6 +173,8 @@
     <Content Include="Views\Proyek\_Delete.cshtml" />
     <Content Include="Views\RencanaJadwal\Index.cshtml" />
     <Content Include="Views\RencanaJadwal\_Create.cshtml" />
+    <Content Include="Views\RencanaJadwal\_Edit.cshtml" />
+    <Content Include="Views\RencanaJadwal\_Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

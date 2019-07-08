@@ -75,6 +75,48 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="idMdlEditRJ" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Ubah Rencana Jadwal <span style="padding-left:550px;"></span> @*<button class="ClBtnCloseRJ" style="background-color:transparent; border:none; overflow:hidden;"><span class="glyphicon glyphicon-remove"></span></button>*@</h4>
+            </div>
+            <div class="modal-body" id="idBodyEditRJ">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="idMdlHapusRJ" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog tengahpls" role="document">
+        <div class="modal-content lebarpls">
+            <div class="modal-header merahbg">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Hapus Rencana Jadwal ?</h4>
+            </div>
+            <div class="modal-body" id="idBodyHapusRJ">
+
+
+
+                @*<p>One fine body&hellip;</p>*@
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script>
     $(document).ready(function () {
 
@@ -158,8 +200,8 @@
                             vtahun = a.getFullYear();
                             vDataDob = vtanggal + " " + vMonthList[vbulan] + " " + vtahun;
 
-                            var RO = { 1: 'Irfan', 2: 'Maulana' };
-                            var TRO = { 1: 'Titi', 2: 'Jaidai' };
+                            var RO = { 1: 'Irfan', 2: 'Maulana', '-': '-' };
+                            var TRO = { 1: 'Titi', 2: 'Jaidai', '-': '-' };
 
                             if (d.is_automatic_mail == true) {
                                 debugger;
@@ -192,15 +234,15 @@
                                     '<br />' + 'Jenis Jadwal : ' + d.name_schedule +
                                     '</td>' +
                                     //'<td><button type = "button" class="btn btn-primary UbahKeahlian" dataBarang=\'' + JSON.stringify(d) + '\' > + </button></td>' +
-
+                                    
                                     '<td align="right">' +
                                         '<button type="button" class="btn-link" style="color:black;">' +
                                         '<span style="font-size:18px;" class="glyphicon glyphicon-search"></span>' +
                                         '</button>' +
-                                        '<button type="button" class="btn-link" style="color:black;">' +
+                                        '<button type="button" dataID="' + d.id + '" class="BtnEditRJ btn-link" style="color:black;">' +
                                         '<span style="font-size:18px;" class="glyphicon glyphicon-edit"></span>' +
                                         '</button>' +
-                                        '<button type="button" class="btn-link" style="color:black;">' +
+                                        '<button type="button" dataID="' + d.id + '" class="HapusRJCfr btn-link" style="color:black;">' +
                                         '<span style="font-size:18px;" class="glyphicon glyphicon-trash"></span>' +
                                         '</button>' +
                                      '</td>' +
@@ -211,6 +253,51 @@
                         debugger;
                         $('#idTblBodyRJ').append(vStrHtml); //memasukan data yg sudah di jahit ke dalam body
                         debugger;
+
+                        $('.BtnEditRJ').click(function () {
+                            var vDataID = parseInt($(this).attr('dataID'));
+                            debugger;
+
+                            $.ajax({
+                                url: '/RencanaJadwal/Edit',
+                                data: { ID: vDataID },
+                                method: 'Post',
+                                success: function (mdl) {
+                                    debugger;
+                                    $('#idBodyEditRJ').empty();
+                                    $('#idBodyEditRJ').append(mdl);
+                                    $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view _Edit
+                                    $('#idMdlEditRJ').modal('show');
+
+                                    debugger;
+                                },
+                                error: function (mdl) {
+                                    debugger;
+                                }
+                            });
+
+                        });
+
+
+                        $('.HapusRJCfr').click(function () {
+                            var vDataID = parseInt($(this).attr('dataID'));
+                            debugger;
+                            $.ajax({
+                                url: '/RencanaJadwal/DeleteCfr',
+                                data: { ID: vDataID },
+                                method: 'Post',
+                                success: function (mdl) {
+                                    $('#idBodyHapusRJ').empty();
+                                    $('#idBodyHapusRJ').append(mdl);
+                                    $('#idget').val(vDataID); //memasukan nilai vDataID ke dalam idget pada partial view
+                                    $('#idMdlHapusRJ').modal('show');
+                                    debugger;
+                                },
+                                error: function (mdl) {
+                                    debugger;
+                                }
+                            });
+                        });
 
                     } else {
                         alert('Data Tidak Ditemukan');

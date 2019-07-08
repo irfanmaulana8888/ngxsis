@@ -136,5 +136,112 @@ namespace Xsis.Repo
                 return result;
             }
         }
+
+        public static Rencana_Jadwal GetByID(int ID)
+        {
+            Rencana_Jadwal rencana = new Rencana_Jadwal();
+            using (DataContext db = new DataContext())
+            {
+                rencana = db.Rencana_Jadwal.Where(d => d.id == ID).First();
+                return rencana;
+            }
+        }
+
+        public static List<Rencana_Jadwal_Detail> GetByID2(int ID)
+        {
+            List<Rencana_Jadwal_Detail> rencana2 = new List<Rencana_Jadwal_Detail>();
+            using (DataContext db = new DataContext())
+            {
+                rencana2 = db.Rencana_Jadwal_Detail.Where(d => d.rencana_jadwal_id == ID && d.is_delete == false).ToList();
+                return rencana2;
+            }
+        }
+
+        public static Boolean Editrencana(RencanaJadwalViewModel editrj)
+        {
+            try
+            {
+                Rencana_Jadwal dep;
+                using (DataContext db = new DataContext())
+                {
+                    dep = db.Rencana_Jadwal.Where(d => d.id == editrj.id).First();
+                    dep.modified_by = editrj.modified_by;
+                    dep.modified_on = DateTime.Now;
+                    dep.schedule_date = editrj.schedule_date;
+                    dep.time = editrj.time;
+                    dep.ro = editrj.ro;
+                    dep.tro = editrj.tro;
+                    dep.schedule_type_id = editrj.schedule_type_id;
+                    dep.location = editrj.location;
+                    dep.notes = editrj.notes;
+                    dep.is_automatic_mail = editrj.is_automatic_mail;
+                    dep.sent_date = editrj.sent_date;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    //Rencana_Jadwal_Detail rens;
+                    List<Rencana_Jadwal_Detail> hpsrencana2 = new List<Rencana_Jadwal_Detail>();
+                    hpsrencana2 = db.Rencana_Jadwal_Detail.Where(d => d.rencana_jadwal_id == editrj.id && d.is_delete == false).ToList();
+                    foreach(var ren in hpsrencana2)
+                    {
+                        //rens = db.Rencana_Jadwal_Detail.Where(d => d.rencana_jadwal_id == ren.rencana_jadwal_id).First();
+                        ren.modified_by = editrj.modified_by;
+                        ren.modified_on = DateTime.Now;
+                        ren.deleted_by = editrj.deleted_by;
+                        ren.deleted_on = DateTime.Now;
+                        ren.is_delete = true;
+                        db.Entry(ren).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    Rencana_Jadwal_Detail rencanadetail = new Rencana_Jadwal_Detail();
+
+                    var a = editrj.biodata_id;
+                    string[] bio = a.Split(',');
+
+                    foreach (var item in bio)
+                    {
+                        rencanadetail.created_by = editrj.created_by;
+                        rencanadetail.created_on = DateTime.Now;
+                        rencanadetail.rencana_jadwal_id = editrj.id;
+                        rencanadetail.biodata_id = Convert.ToInt16(item);
+                        db.Rencana_Jadwal_Detail.Add(rencanadetail);
+                        db.SaveChanges();
+                    }
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public static Boolean Deleterencana(int ID, Rencana_Jadwal RJmdl)
+        {
+            try
+            {
+
+                Rencana_Jadwal dep;
+                using (DataContext db = new DataContext())
+                {
+                    dep = db.Rencana_Jadwal.Where(d => d.id == ID).First();
+                    dep.is_delete = true;
+                    dep.deleted_by = RJmdl.deleted_by;
+                    dep.deleted_on = DateTime.Now;
+                    db.Entry(dep).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
     }
 }
