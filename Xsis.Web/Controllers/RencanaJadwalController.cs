@@ -61,9 +61,9 @@ namespace Xsis.Web.Controllers
             }
         }
 
-        public ActionResult Cari(DateTime Dari, DateTime Sampai)
+        public ActionResult Cari(DateTime Dari, DateTime Sampai, string SortType)
         {
-            return Json(RencanaJadwalRepo.GetData(Dari,Sampai), JsonRequestBehavior.AllowGet);
+            return Json(RencanaJadwalRepo.GetData(Dari, Sampai, SortType), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Select()

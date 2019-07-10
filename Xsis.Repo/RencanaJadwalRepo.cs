@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using Xsis.Model;
@@ -70,6 +71,8 @@ namespace Xsis.Repo
                     Rencana_Jadwal_Detail rencanadetail = new Rencana_Jadwal_Detail();
                     var a = RJmdl.biodata_id;
                     string[] bio = a.Split(',');
+
+                    int[] bio22 = Array.ConvertAll(bio, Element => int.Parse(Element));
                     
                     foreach (var item in bio)
                     {
@@ -79,6 +82,61 @@ namespace Xsis.Repo
                     rencanadetail.biodata_id = Convert.ToInt16(item);
                     db.Rencana_Jadwal_Detail.Add(rencanadetail);
                     db.SaveChanges();
+                    }
+
+                    if (RJmdl.is_automatic_mail == null)
+                    {
+                        using (DataContext dbbio = new DataContext())
+                        {
+                            foreach (var ambl in bio22)
+                            {
+                                List<Biodata> biodata = new List<Biodata>();
+                                biodata = dbbio.Biodata.Where(dbio => dbio.id == ambl && dbio.is_delete == false).ToList();                                
+                                foreach ( var kirime in biodata)
+                                {
+                                    var z = kirime.email;
+
+                                        MailMessage mail = new MailMessage();
+
+                                        SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                                        mail.From = new MailAddress("academyxsis@gmail.com");
+                                        mail.To.Add(z);
+                                        mail.Subject = "Undangan PT. Xsis Mitra Utama";
+                                        mail.IsBodyHtml = true;
+
+                                        string date = RJmdl.schedule_date.ToString();
+
+                                        string htmlStr =
+                                            "<tr>" +
+                                            "Helo " + kirime.fullname + " , " +
+                                            "</tr>" +
+                                            "<tr>" +
+                                            "Terima kasih atas antusias anda untuk bergabung dengan kami." +
+                                            "</tr>" +
+                                            "<tr>" +
+                                            "HRD PT. Xsis Mitra Utama mengundang anda untuk hadir pada :" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                            "Tanggal : " + date.Substring(0, 10) + "" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                            "Jam : " + RJmdl.time + "" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                            "Dimohon Hadir tepat waktu dengan mengenakan pakaian rapih dan bersepatu" +
+                                            "</tr>";
+                                        mail.Body = htmlStr;
+                                        SmtpServer.Port = 587;
+                                        SmtpServer.Credentials = new System.Net.NetworkCredential("academyxsis@gmail.com", "Irfan2@@");
+                                        SmtpServer.EnableSsl = true;
+
+                                        SmtpServer.Send(mail);
+
+                                }
+                            }
+                        }
+                       
                     }
 
                 }
@@ -101,29 +159,54 @@ namespace Xsis.Repo
         //    }
         //}
 
-        public static List<RencanaJadwalViewModel> GetData(DateTime Dari, DateTime Sampai)
+        public static List<RencanaJadwalViewModel> GetData(DateTime Dari, DateTime Sampai, string SortType)
         {
             List<RencanaJadwalViewModel> rencana = new List<RencanaJadwalViewModel>();
             using (DataContext db = new DataContext())
             {
-                rencana = (from item in db.Rencana_Jadwal
-                           join Schedule_Type in db.Schedule_Type on item.schedule_type_id equals Schedule_Type.id
-                           where item.is_delete == false && item.schedule_date >= Dari && item.schedule_date <= Sampai
-                           select new RencanaJadwalViewModel
-                           {
-                               id = item.id,
-                               schedule_code = item.schedule_code,
-                               schedule_date = item.schedule_date,
-                               time = item.time,
-                               ro = item.ro,
-                               tro = item.tro,
-                               location = item.location,
-                               is_automatic_mail = item.is_automatic_mail,
-                               name_schedule = Schedule_Type.name
-                          }
-                          ).ToList();
+                if (SortType == "1")
+                {
+                    rencana = (from item in db.Rencana_Jadwal
+                               join Schedule_Type in db.Schedule_Type on item.schedule_type_id equals Schedule_Type.id
+                               orderby item.id descending
+                               where item.is_delete == false && item.schedule_date >= Dari && item.schedule_date <= Sampai
+                               select new RencanaJadwalViewModel
+                               {
+                                   id = item.id,
+                                   schedule_code = item.schedule_code,
+                                   schedule_date = item.schedule_date,
+                                   time = item.time,
+                                   ro = item.ro,
+                                   tro = item.tro,
+                                   location = item.location,
+                                   is_automatic_mail = item.is_automatic_mail,
+                                   name_schedule = Schedule_Type.name
+                               }
+                              ).ToList();
 
-                return rencana;
+                    return rencana;
+                }else
+                {
+                    rencana = (from item in db.Rencana_Jadwal
+                               join Schedule_Type in db.Schedule_Type on item.schedule_type_id equals Schedule_Type.id
+                               orderby item.id ascending
+                               where item.is_delete == false && item.schedule_date >= Dari && item.schedule_date <= Sampai
+                               select new RencanaJadwalViewModel
+                               {
+                                   id = item.id,
+                                   schedule_code = item.schedule_code,
+                                   schedule_date = item.schedule_date,
+                                   time = item.time,
+                                   ro = item.ro,
+                                   tro = item.tro,
+                                   location = item.location,
+                                   is_automatic_mail = item.is_automatic_mail,
+                                   name_schedule = Schedule_Type.name
+                               }
+                              ).ToList();
+
+                    return rencana;
+                }
             }
         }
 
