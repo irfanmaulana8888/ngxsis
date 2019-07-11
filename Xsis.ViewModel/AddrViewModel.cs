@@ -6,14 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xsis.Model
+namespace Xsis.ViewModel
 {
-
-    [Table("x_userrole")]
-    public class UserRole
+    public class AddrViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
@@ -35,8 +31,23 @@ namespace Xsis.Model
 
         public Boolean is_delete { get; set; }
 
-        public long addrbok_id { get; set; }
+        public Boolean is_locked { get; set; }
 
-        public long role_id { get; set; }
+        [Column(TypeName = "Varchar")]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(100)]
+        public string email { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(50)]
+        public string abuid { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(50)]
+        public string abpwd { get; set; }
+
+        public string role_id { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Xsis.Model;
+using Xsis.ViewModel;
 
 namespace Xsis.Repo
 {
@@ -47,7 +48,33 @@ namespace Xsis.Repo
             }
         }
 
-        public static Boolean Createaddr(AddrBook addrmdl)
+        public static long GetLast()
+        {
+
+            List<AddrBook> result = new List<AddrBook>();
+            using (var db = new DataContext())
+            {
+
+                result = (from t in db.AddrBook
+                          select t).ToList();
+
+                long length = result.Count();
+
+                return length;
+            }
+        }
+
+        public static List<UserRole> GetByID2(int ID)
+        {
+            List<UserRole> roles = new List<UserRole>();
+            using (DataContext db = new DataContext())
+            {
+                roles = db.UserRole.Where(d => d.addrbok_id == ID && d.is_delete == false).ToList();
+                return roles;
+            }
+        }
+
+        public static Boolean Createaddr(AddrViewModel addrmdl)
         {
             try
             {
@@ -68,6 +95,21 @@ namespace Xsis.Repo
                     addr.abpwd = encodedData;
                     db.AddrBook.Add(addr);
                     db.SaveChanges();
+
+                    UserRole role = new UserRole();
+                    var a = addrmdl.role_id;
+                    string[] rolid = a.Split(',');
+                    var last = GetLast();
+
+                    foreach (var item in rolid)
+                    {
+                        role.created_by = addrmdl.created_by;
+                        role.created_on = DateTime.Now;
+                        role.addrbok_id = last;
+                        role.role_id = Convert.ToInt16(item);
+                        db.UserRole.Add(role);
+                        db.SaveChanges();
+                    }
                 }
                 return true;
             }

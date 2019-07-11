@@ -43,7 +43,7 @@
                     <label style="border:1px solid blue; border-radius:5px; height:220px;" id="idRole">
                         <label style="color:white;font-size:18px; padding:5px; background-color:blue; width:305px;">Role*</label>
                     </label>
-                    <input type="text" id="simpan" name="id" />
+                    <input type="hidden" id="simpan" name="role_id" />
                 </td>
             </tr>
             <tr>
@@ -61,6 +61,7 @@
                         Email Tidak Valid.
                     </small>
                     <input type="hidden" id="idGet" />
+                    <input type="hidden" id="idValids" />
                 </td>
                 <td></td>
                 <td></td>
@@ -147,6 +148,7 @@
     });
 
     $(document).ready(function () {
+
         document.getElementById("idFullName").readOnly = false;
         document.getElementById("idHps").disabled = true;
 
@@ -238,6 +240,30 @@
         });
     }
 
+    function ambilrole(){
+        //mengambildata pada user role
+        debugger;
+        var cks = '';
+        $.ajax({
+            url: '/Addr/AmbilData2',
+            data: { ID: $('#idGet').val() },
+            method: 'Get',
+            success: function (mdl) {
+                debugger;
+                $.each(mdl, function (i, d) { //menjahit data ke dalam tabel
+                    cks = d.role_id;
+                    $(":checkbox[value=" + cks + "]").prop("checked", "true");
+                });
+                debugger;
+
+                if ($('#idGet').val() != "") {
+                    debugger;
+                    document.getElementById("idHps").disabled = false;
+                }
+            }
+        });
+    }
+
     function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,
         the text field element and an array of possible autocompleted values:*/
@@ -317,6 +343,7 @@
                         $('#idInpPw').val('');
                         $('#idInpPw2').val('');
                         $('#idGet').val('');
+                        $('.ads_Checkbox').prop('checked', false);
                         document.getElementById("idFullName").readOnly = true;
                         document.getElementById("idInpPw").readOnly = false;
                         document.getElementById("idInpPw2").readOnly = false;
@@ -332,8 +359,6 @@
                                         //mengecek email ada pada database addrbook
                                         if (d.email == $('#idUserName').val()) {
                                             debugger;
-                                            document.getElementById("idHps").disabled = false;
-
                                             //mengambil data pada addr book apabila email ada
                                             $.ajax({
                                                 url: '/Addr/AmbilData',
@@ -342,15 +367,19 @@
                                                 success: function (mdl) {
                                                     debugger;
                                                     $('#idGet').val(mdl.id);
+                                                    $('#idValids').val(mdl.email);
                                                     $('#idInpPw').val(mdl.abpwd);
                                                     $('#idInpPw2').val(mdl.abpwd);
                                                     document.getElementById("idFullName").readOnly = true;
                                                     document.getElementById("idInpPw").readOnly = true;
                                                     document.getElementById("idInpPw2").readOnly = true;
                                                     debugger;
+
+                                                    ambilrole();
                                                 }
                                             });
-                                        } else {
+
+                                        }else{
                                             document.getElementById("idHps").disabled = true;
                                         }
                                     });

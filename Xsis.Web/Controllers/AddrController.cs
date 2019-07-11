@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Xsis.Model;
 using Xsis.Repo;
+using Xsis.ViewModel;
 
 namespace Xsis.Web.Controllers
 {
@@ -32,7 +33,13 @@ namespace Xsis.Web.Controllers
             return Json(AddrRepo.GetByEmail(Email), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Save(AddrBook addr)
+        public ActionResult AmbilData2(int ID)
+        {
+            return Json(AddrRepo.GetByID2(ID), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult Save(AddrViewModel addr)
         {
             addr.created_by = Convert.ToInt64(Session["foo"]);
             if (AddrRepo.Createaddr(addr))
