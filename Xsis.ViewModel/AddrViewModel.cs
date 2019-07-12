@@ -49,5 +49,7 @@ namespace Xsis.ViewModel
         public string abpwd { get; set; }
 
         public string role_id { get; set; }
+
+        public long id_ubah { get; set; }
     }
 }

@@ -120,6 +120,61 @@ namespace Xsis.Repo
             }
         }
 
+        public static Boolean EditAddr(AddrViewModel addrmdl)
+        {
+            try
+            {
+                //AddrBook der;
+                using (DataContext db = new DataContext())
+                {
+                    //der = db.AddrBook.Where(d => d.id == addrmdl.id_ubah).First();
+                    //der.modified_by = addrmdl.modified_by;
+                    //der.modified_on = DateTime.Now;
+                    //der.email = addrmdl.email;
+                    //der.abuid = addrmdl.email;
+                    //db.Entry(der).State = System.Data.Entity.EntityState.Modified;
+                    //db.SaveChanges();
+
+                    List<UserRole> urole = new List<UserRole>();
+                    urole = db.UserRole.Where(d => d.addrbok_id == addrmdl.id_ubah && d.is_delete == false).ToList();
+                    foreach (var ren in urole)
+                    {
+                        //rens = db.Rencana_Jadwal_Detail.Where(d => d.rencana_jadwal_id == ren.rencana_jadwal_id).First();
+                        //ren.created_by = ren.created_by;
+                        ren.modified_by = addrmdl.modified_by;
+                        ren.modified_on = DateTime.Now;
+                        ren.deleted_by = addrmdl.deleted_by;
+                        ren.deleted_on = DateTime.Now;
+                        ren.is_delete = true;
+                        db.Entry(ren).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    UserRole uroles = new UserRole();
+
+                    var a = addrmdl.role_id;
+                    string[] bio = a.Split(',');
+
+                    foreach (var item in bio)
+                    {
+                        uroles.created_by = addrmdl.created_by;
+                        uroles.created_on = DateTime.Now;
+                        uroles.addrbok_id = addrmdl.id_ubah;
+                        uroles.role_id = Convert.ToInt16(item);
+                        db.UserRole.Add(uroles);
+                        db.SaveChanges();
+                    }
+
+                }
+                    return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
         public static Boolean Deleteaddr(int ID, AddrBook addrmdl)
         {
             try

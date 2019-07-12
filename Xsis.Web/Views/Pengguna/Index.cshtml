@@ -60,7 +60,7 @@
                            data-validation-message="emailValid">
                         Email Tidak Valid.
                     </small>
-                    <input type="hidden" id="idGet" />
+                    <input type="hidden" id="idGet" name="id_ubah" />
                     <input type="hidden" id="idValids" />
                 </td>
                 <td></td>
@@ -235,6 +235,28 @@
                 else {
                     debugger;
                     alert("Data gagal disimpan");
+                }
+            }
+        });
+    }
+
+    function editaddr(){
+        var vDataaddr = $('#idFrmSubmitPengguna').serialize();
+        $.ajax({
+            url: '/Addr/Edit',
+            data: vDataaddr,
+            method: 'Post',
+            success: function (mdl) {
+                debugger;
+                if (mdl.EditSimpan == "Berhasil") {
+                    alert("Data berhasil diubah");
+                    //$('.modal').modal('hide');
+                    //$.modal.close();
+                    location.reload();
+                }
+                else {
+                    debugger;
+                    alert("Data gagal diubah");
                 }
             }
         });
@@ -597,6 +619,44 @@ form.addEventListener("submit", event => {
             event.preventDefault();
             }
 
+            if ($('#idGet').val() != "") {
+
+                if ($('#idValids').val() != $('#idUserName').val()) {
+
+                    var email= $('#idUserName').val();
+                    var a = 0 ;
+                    debugger;
+                    if ($('#idUserName').val() != "" && $('#simpan').val() != "") {
+                        debugger;
+                        array_totals.some(function(item,index){
+
+                            if(item == email){
+                                debugger;
+                                a = 1;
+                                alert('Email Sudah Digunakan');
+                                event.preventDefault();
+                                return true;
+                            }
+                        });
+                    }
+
+                    if (a != 1 && $('#simpan').val() != "") {
+                        debugger;
+                        editaddr();
+                        //simpanaddr();
+                    }
+
+                }else{
+
+                    if (a != 1 && $('#simpan').val() != "") {
+                        debugger;
+                        editaddr();
+                        //simpanaddr();
+                    }
+
+                }
+
+            }else{
             var email= $('#idUserName').val();
             var a = 0 ;
             debugger;
@@ -617,6 +677,7 @@ form.addEventListener("submit", event => {
             if (a != 1 && $('#simpan').val() != "") {
                 debugger;
                 simpanaddr();
+            }
             }
         }
     });

@@ -43,6 +43,8 @@ namespace Xsis.Model
             role.Add(new Role { code = "A3", name = "Manager", created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false });
             role.Add(new Role { code = "A4", name = "Hrd", created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false });
             role.Add(new Role { code = "A5", name = "Direktur", created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false });
+            role.Add(new Role { code = "RO", name = "RO", created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false });
+            role.Add(new Role { code = "TRO", name = "TRO", created_by = 99, created_on = DateTime.Now, modified_by = null, modified_on = null, deleted_by = null, deleted_on = null, is_delete = false });
             base.Seed(context);
 
             foreach (var item in role)

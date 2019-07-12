@@ -52,6 +52,21 @@ namespace Xsis.Web.Controllers
             }
         }
 
+        public ActionResult Edit(AddrViewModel addr)
+        {
+            addr.modified_by = Convert.ToInt64(Session["foo"]);
+            addr.created_by = Convert.ToInt64(Session["foo"]);
+            addr.deleted_by = Convert.ToInt64(Session["foo"]);
+            if (AddrRepo.EditAddr(addr))
+            {
+                return Json(new { EditSimpan = "Berhasil" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { EditSimpan = "Gagal" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public ActionResult DeleteCfr(int ID)
         {
             return PartialView("_Delete");
