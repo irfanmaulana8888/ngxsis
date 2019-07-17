@@ -215,7 +215,13 @@ namespace Xsis.Repo
             List<Schedule_Type> result = new List<Schedule_Type>();
             using (var db = new DataContext())
             {
-                result = db.Schedule_Type.ToList();
+                //result = (from item in db.Schedule_Type where item.is_delete == false
+                //          select new Schedule_Type {
+                //              id = item.id,
+                //              name = item.name
+
+                //}).ToList();
+                result = db.Schedule_Type.Where(d =>  d.is_delete == false).ToList();
                 return result;
             }
         }

@@ -115,8 +115,8 @@
         <tr>
             <td>
                 <label id="idDataPelamar"></label>
-                <input type="text" name="biodata_id" id="idBiodata" />
-                <input type="text" name="id" id="idget" />
+                <input type="hidden" name="biodata_id" id="idBiodata" />
+                <input type="hidden" name="id" id="idget" />
             </td>
         </tr>
         <tr>
@@ -213,6 +213,7 @@
                     var sentDate = convert(new Date(mdl.sent_date.substr(6, 13) - 0));
                 }
                 var testDate = convert(new Date(mdl.schedule_date.substr(6, 13) - 0));
+                var text = mdl.notes.trim();
 
                 debugger;
                 $('#idInpTgl').val(testDate);
@@ -221,7 +222,7 @@
                 $('#idTro').val(mdl.tro).selected;
                 $('#idJadwal').val(mdl.schedule_type_id).selected;
                 $('#idInpLocation').val(mdl.location);
-                $('#txtarea').val(mdl.notes);
+                $('#txtarea').val(text);
                 var cek = mdl.is_automatic_mail;
                 $('#idAutomatic').attr('checked', cek);
 
